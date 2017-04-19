@@ -1,0 +1,6 @@
+Mage
+Long Life
+Gain 10 points of extra health
+health
+10
+#
