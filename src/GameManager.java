@@ -1,5 +1,6 @@
 import Character.Player;
 import Infrastructure.Cell;
+import Infrastructure.Gate;
 import Infrastructure.Map;
 import Skill.Skillset;
 import Skill.Skill;
@@ -21,10 +22,14 @@ public class GameManager {
   public GameManager(String playerName,String playerSkillset) {
     try {
       maps = new Vector<Map>();
-      int row, column, effectValue, playerAbsis, playerOrdinat;
-      String mapName, toPreviousMap, toNextMap, buffer, skillsetName, skillName, skillDesc, skillEffect;
+      int row, column, effectValue, playerRow, playerColumn;
+      String mapName, buffer, skillsetName, skillName, skillDesc, skillEffect;
       Cell[][] cells;
+      Vector<Gate> gates;
       Scanner readMap = new Scanner(new FileInputStream("src/map.txt"));
+      playerRow = readMap.nextInt();
+      playerColumn = readMap.nextInt();
+      buffer = readMap.nextLine();
       mapName = readMap.nextLine();
       while (!mapName.equals("#")) {
         row = readMap.nextInt();
@@ -36,10 +41,17 @@ public class GameManager {
             cells[i][j] = new Cell(i, j, buffer.charAt(j));
           }
         }
+        gates = new Vector<Gate>();
+        for (int i = 0; i < 4; i++) {
+          int mapID = readMap.nextInt();
+          if(mapID != -1) {
+            gates.addElement(new Gate(readMap.nextInt(), readMap.nextInt(), mapID));
+          } else {
+            gates.addElement(new Gate(0,0,-1));
+          }
+        }
         buffer = readMap.nextLine();
-        toPreviousMap = readMap.nextLine();
-        toNextMap = readMap.nextLine();
-        maps.addElement(new Map(mapName, maps.size(), cells, row, column, toPreviousMap, toNextMap));
+        maps.addElement(new Map(mapName, maps.size(), cells, row, column,gates));
         mapName = readMap.nextLine();
       }
       currentMapID = 0;
@@ -61,9 +73,7 @@ public class GameManager {
         skillset.addSkill(new Skill(skillName, skillDesc, skillEffect, effectValue));
         skillName = readSkillset.nextLine();
       }
-      playerAbsis = maps.get(0).getEntrance().getCellRow();
-      playerOrdinat = maps.get(0).getEntrance().getCellColumn();
-      player = new Player(playerName, 0, playerAbsis, playerOrdinat, 1);
+      player = new Player(playerName, 0, playerRow, playerColumn, 1);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -119,21 +129,34 @@ public class GameManager {
     return (input.equals("w") || input.equals("s") || input.equals("a") || input.equals("d"));
   }
 
+  public boolean isMovementInput(char input) {
+    return (input == 'w' || input == 's' || input == 'a' || input == 'd');
+  }
+
   public void handleMovement(String input) {
     char playerCellType = maps.get(currentMapID).getCell(player.getActorRow(),player.getActorColumn()).getType();
-    if(playerCellType == '+'){
-      if(input.equals(maps.get(currentMapID).getToPreviousMap())) {
-        if(currentMapID != 0) {
-          moveToPreviousMap();
+    if(isMovementInput(playerCellType)){
+      char movement = input.charAt(0);
+      if(movement == playerCellType) {
+        int gateID = -1;
+        switch(playerCellType){
+          case 'w':
+            gateID = 0;
+            break;
+          case 's':
+            gateID = 1;
+            break;
+          case 'a':
+            gateID = 2;
+            break;
+          case 'd':
+            gateID = 3;
+            break;
         }
-      } else {
-        moveNormally(input);
-      }
-    } else if(playerCellType == '*') {
-      if(input.equals(maps.get(currentMapID).getToNextMap())) {
-        if(currentMapID != maps.size()-1) {
-          moveToNextMap();
-        }
+        int targetMapID = maps.get(currentMapID).getGates().get(gateID).getMapIDTarget();
+        int playerRow = maps.get(currentMapID).getGates().get(gateID).getRowTarget();
+        int playerColumn = maps.get(currentMapID).getGates().get(gateID).getColumnTarget();
+        moveTo(targetMapID,playerRow,playerColumn);
       } else {
         moveNormally(input);
       }
@@ -142,18 +165,11 @@ public class GameManager {
     }
   }
 
-  public void moveToNextMap() {
-    currentMapID = currentMapID + 1;
+  public void moveTo(int mapID,int row,int column) {
+    currentMapID = mapID;
+    player.setActorRow(row);
+    player.setActorColumn(column);
     System.out.println(maps.get(currentMapID).getMapName());
-    player.setActorRow(maps.get(currentMapID).getEntrance().getCellRow());
-    player.setActorColumn(maps.get(currentMapID).getEntrance().getCellColumn());
-  }
-
-  public void moveToPreviousMap() {
-    currentMapID = currentMapID - 1;
-    System.out.println(maps.get(currentMapID).getMapName());
-    player.setActorRow(maps.get(currentMapID).getExit().getCellRow());
-    player.setActorColumn(maps.get(currentMapID).getExit().getCellColumn());
   }
 
   public void moveNormally(String input) {

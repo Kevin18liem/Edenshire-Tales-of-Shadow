@@ -1,5 +1,7 @@
 package Infrastructure;
 
+import java.util.Vector;
+
 /**
  * Created by edwin on 18/04/17.
  */
@@ -9,12 +11,9 @@ public class Map {
   private int row;
   private int column;
   private Cell[][] cells;
-  private String toPreviousMap;
-  private String toNextMap;
-  private Cell entrance;
-  private Cell exit;
+  private Vector<Gate> gates;
 
-  public Map(String mapName, int mapID, Cell[][] cells,int row,int column,String toPreviousMap,String toNextMap) {
+  public Map(String mapName, int mapID, Cell[][] cells,int row,int column,Vector<Gate> gates) {
     this.mapName = mapName;
     this.mapID = mapID;
     this.row = row;
@@ -25,16 +24,9 @@ public class Map {
     for (i = 0; i < row; i++) {
       for (j = 0; j < column; j++) {
         this.cells[i][j] = new Cell(i, j, cells[i][j].getType());
-        if (this.cells[i][j].getType() == '+') {
-          entrance = this.cells[i][j];
-        }
-        if (this.cells[i][j].getType() == '*') {
-          exit = this.cells[i][j];
-        }
       }
     }
-    this.toPreviousMap = toPreviousMap;
-    this.toNextMap = toNextMap;
+    this.gates = gates;
   }
 
   public Map(Map oldMap) {
@@ -48,8 +40,8 @@ public class Map {
         this.cells[i][j] = new Cell(i, j, oldMap.cells[i][j].getType());
       }
     }
-    this.toPreviousMap = oldMap.toPreviousMap;
-    this.toNextMap = oldMap.toNextMap;
+    this.gates = oldMap.gates;
+
   }
 
   public String getMapName() {
@@ -68,10 +60,6 @@ public class Map {
     return cells[row][column];
 	}
 
-  public String getToPreviousMap() {
-    return toPreviousMap;
-	}
-
 	public int getRow() {
     return row;
 	}
@@ -80,17 +68,9 @@ public class Map {
     return column;
 	}
 
-	public Cell getEntrance() {
-    return entrance;
-	}
-
-	public Cell getExit() {
-    return exit;
-	}
-
-	public String getToNextMap() {
-    return toNextMap;
-	}
+  public Vector<Gate> getGates() {
+    return gates;
+  }
 
 	public void setCellType(int row,int column,char type) {
     cells[row][column].setType(type);

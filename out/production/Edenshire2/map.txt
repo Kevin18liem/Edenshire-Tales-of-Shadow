@@ -1,21 +1,50 @@
+1 1
 InitialMap
-5
-5
+5 5
+xxwxx
+xrrrx
+xrrrx
+xrrrd
+xsxxx
+2 9 2
+3 0 2
+-1
+1 2 0
+EastMap
+5 5
 xxxxx
 xrrrx
-+rrrx
-xrrr*
-xxxxx
-a
-d
-NextMap
-5
-5
-xxxxx
+arrrx
 xrrrx
-+rrrx
-xrrr*
 xxxxx
-a
-d
+-1
+-1
+0 3 4
+-1
+NorthMap
+10 10
+xxxxxxxxxx
+xrrrrrrrrx
+xrrrrrrrrx
+xrrrrxxxxx
+xrrrrxrrrr
+xrrrrxrrrr
+xrrrrxrrrr
+xrrrrxxxxr
+xrrrrrrrxr
+xxsxxxxxxr
+-1
+0 0 2
+-1
+-1
+SouthMap
+4 4
+xxwx
+xrrx
+xrrx
+xxxx
+0 4 1
+-1
+-1
+-1
 #
