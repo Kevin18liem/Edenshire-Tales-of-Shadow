@@ -1,3 +1,5 @@
+import Character.Monster;
+import Character.People;
 import Character.Player;
 import Infrastructure.Cell;
 import Infrastructure.Gate;
@@ -18,10 +20,14 @@ public class GameManager {
   private Skillset skillset;
   private Player player;
   private int currentMapID;
+  private Vector<Monster> monsters;
+  private Vector<People> peoples;
 
   public GameManager(String playerName,String playerSkillset) {
     try {
       maps = new Vector<Map>();
+      monsters = new Vector<Monster>();
+      peoples = new Vector<People>();
       int row, column, effectValue, playerRow, playerColumn;
       String mapName, buffer, skillsetName, skillName, skillDesc, skillEffect;
       Cell[][] cells;
@@ -74,6 +80,8 @@ public class GameManager {
         skillName = readSkillset.nextLine();
       }
       player = new Player(playerName, 0, playerRow, playerColumn, 1);
+      monsters.addElement(new Monster("Monster",0,3,3,10,10,10,10,10,10));
+      peoples.addElement(new People("Orang",0,2,2,-1));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -82,6 +90,10 @@ public class GameManager {
   public void renderGame() {
     Map currentMap = new Map(maps.get(currentMapID));
     currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    if (monsters.get(0).getHealth() > 0) {
+      currentMap.setCellType(monsters.get(0).getActorRow(), monsters.get(0).getActorColumn(), 'A');
+    }
+    currentMap.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
     currentMap.renderMap();
   }
 
@@ -134,6 +146,8 @@ public class GameManager {
   }
 
   public void handleMovement(String input) {
+    monsters.get(0).move(player.getActorRow(),player.getActorColumn(),maps.get(currentMapID));
+    peoples.get(0).move(maps.get(currentMapID));
     char playerCellType = maps.get(currentMapID).getCell(player.getActorRow(),player.getActorColumn()).getType();
     if(isMovementInput(playerCellType)){
       char movement = input.charAt(0);
@@ -175,25 +189,35 @@ public class GameManager {
   public void moveNormally(String input) {
     switch (input) {
       case "w":
-        if (maps.get(currentMapID).getCell(player.getActorRow() - 1, player.getActorColumn()).getType() != 'x') {
+        if (isFreeBlock(player.getActorRow() - 1,player.getActorColumn())) {
           player.move("up");
         }
         break;
       case "s":
-        if (maps.get(currentMapID).getCell(player.getActorRow() + 1, player.getActorColumn()).getType() != 'x') {
+        if (isFreeBlock(player.getActorRow() + 1,player.getActorColumn())) {
           player.move("down");
         }
         break;
       case "a":
-        if (maps.get(currentMapID).getCell(player.getActorRow(), player.getActorColumn() - 1).getType() != 'x') {
+        if (isFreeBlock(player.getActorRow(),player.getActorColumn() - 1)) {
           player.move("left");
         }
         break;
       case "d":
-        if (maps.get(currentMapID).getCell(player.getActorRow(), player.getActorColumn() + 1).getType() != 'x') {
+        if (isFreeBlock(player.getActorRow(),player.getActorColumn() + 1)) {
           player.move("right");
         }
         break;
     }
+  }
+
+  public boolean isFreeBlock(int row,int column) {
+    Map currentMap = new Map(maps.get(currentMapID));
+    currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    currentMap.setCellType(monsters.get(0).getActorRow(),monsters.get(0).getActorColumn(),'A');
+    currentMap.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
+    char cellType = currentMap.getCell(row,column).getType();
+    System.out.println(cellType);
+    return (cellType != 'x' && cellType != '!' && cellType != 'A');
   }
 }

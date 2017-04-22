@@ -210,7 +210,7 @@ public class Monster extends Actor implements Movement{
         }
       }
     }
-    moveRandom(posXPlayer,posYPlayer,currentMap);
+    moveRandom(posXPlayer,posYPlayer,currentMap,1);
 //    int direction;
 //    Random way = new Random();
 //    while (actorRow != posXPlayer || actorColumn != posYPlayer) {
@@ -236,26 +236,43 @@ public class Monster extends Actor implements Movement{
    * @param posYPlayer Posisi Absis dari Player.
    * @param currentMap Peta yang ditempati saat ini.
    */
-  public void moveRandom(int posXPlayer, int posYPlayer, Map currentMap) {
+  public void moveRandom(int posXPlayer, int posYPlayer, Map currentMap, int movementCode) {
     int direction;
     Random way = new Random();
-    while (actorRow != posXPlayer || actorColumn != posYPlayer) {
-      direction = way.nextInt(4);
-      currentMap.setCellType(actorRow,actorColumn,'r');
-      if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3) {
-        actorRow = actorRow - 1;
-      } else if (direction == 1  && currentPath[actorRow][actorColumn + 1] == 3) {
-        actorColumn = actorColumn + 1;
-      } else if (direction == 2  && currentPath[actorRow + 1][actorColumn] == 3) {
-        actorRow = actorRow + 1;
-      } else if (direction == 3  && currentPath[actorRow][actorColumn - 1] == 3) {
-        actorColumn = actorColumn - 1;
+    if (movementCode == 1) {
+      while (actorRow != posXPlayer || actorColumn != posYPlayer) {
+        direction = way.nextInt(4);
+        currentMap.setCellType(actorRow, actorColumn, 'r');
+        if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3) {
+          actorRow = actorRow - 1;
+        } else if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3) {
+          actorColumn = actorColumn + 1;
+        } else if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3) {
+          actorRow = actorRow + 1;
+        } else if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3) {
+          actorColumn = actorColumn - 1;
+        }
+        //currentMap.setCellType(actorRow, actorColumn, 'A');
       }
-      currentMap.setCellType(actorRow,actorColumn,'A');
+      System.out.println(actorRow + " " + actorColumn);
+    } else {
+      while (actorRow != posXPlayer || actorColumn != posYPlayer) {
+        direction = way.nextInt(4);
+        currentMap.setCellType(actorRow, actorColumn, 'r');
+        if (direction == 0 && isValid(currentMap, actorRow - 1, actorColumn)) {
+          actorRow = actorRow - 1;
+        } else if (direction == 1 && isValid(currentMap, actorRow, actorColumn + 1)) {
+          actorColumn = actorColumn + 1;
+        } else if (direction == 2 && isValid(currentMap, actorRow + 1, actorColumn)) {
+          actorRow = actorRow + 1;
+        } else if (direction == 3 && isValid(currentMap, actorRow, actorColumn - 1)) {
+          actorColumn = actorColumn - 1;
+        }
+        //currentMap.setCellType(actorRow, actorColumn, 'M');
+      }
+      System.out.println(actorRow + " " + actorColumn);
     }
-    System.out.println(actorRow + " " + actorColumn);
   }
-
   /**
    * Fungsi Pengecek Posisi dengan Tujuan.
    * @param posXPlayer Posisi Ordinat dari Player.
