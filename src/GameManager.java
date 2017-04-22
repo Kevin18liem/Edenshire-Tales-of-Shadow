@@ -22,6 +22,7 @@ public class GameManager {
   private int currentMapID;
   private Vector<Monster> monsters;
   private Vector<People> peoples;
+  private Map currentMap;
 
   public GameManager(String playerName,String playerSkillset) {
     try {
@@ -61,6 +62,7 @@ public class GameManager {
         mapName = readMap.nextLine();
       }
       currentMapID = 0;
+      currentMap = new Map(maps.get(currentMapID));
       Scanner readSkillset = new Scanner(new FileInputStream("src/skillset.txt"));
       skillsetName = readSkillset.nextLine();
       while (!skillsetName.equals(playerSkillset)) {
@@ -80,23 +82,27 @@ public class GameManager {
         skillName = readSkillset.nextLine();
       }
       player = new Player(playerName, 0, playerRow, playerColumn, 1);
-      monsters.addElement(new Monster("Monster",0,3,3,10,10,10,10,10,10));
+      currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+      //monsters.addElement(new Monster("Monster",0,3,3,10,10,10,10,10,10));
       monsters.addElement(new Monster("Tes",0,2,3,10,10,10,10,10,10));
-      peoples.addElement(new People("Orang",0,2,2,-1));
+      //peoples.addElement(new People("Orang",0,2,2,-1));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public void renderGame() {
-    Map currentMap = new Map(maps.get(currentMapID));
-    currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
-    if (monsters.get(0).getHealth() > 0) {
-      currentMap.setCellType(monsters.get(0).getActorRow(), monsters.get(0).getActorColumn(), 'A');
-      currentMap.setCellType(monsters.get(1).getActorRow(), monsters.get(1).getActorColumn(), 'M');
-    }
-    currentMap.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
+    System.out.println("Copy: ");
     currentMap.renderMap();
+    System.out.println("Real: ");
+    Map toRender = new Map(maps.get(currentMapID));
+    toRender.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    if (monsters.get(0).getHealth() > 0) {
+      toRender.setCellType(monsters.get(0).getActorRow(), monsters.get(0).getActorColumn(), 'A');
+      //currentMap.setCellType(monsters.get(1).getActorRow(), monsters.get(1).getActorColumn(), 'M');
+    }
+    //toRender.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
+    toRender.renderMap();
   }
 
   public void runGame() {
@@ -148,11 +154,10 @@ public class GameManager {
   }
 
   public void handleMovement(String input) {
-    Map currentMap = new Map(maps.get(currentMapID));
-    currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
-    monsters.get(0).moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
-    monsters.get(1).moveRandom(currentMap);
-    peoples.get(0).move(maps.get(currentMapID));
+    int initialPlayerRow = player.getActorRow();
+    int initialPlayerColumn = player.getActorColumn();
+    //monsters.get(1).moveRandom(currentMap);
+    //peoples.get(0).move(currentMap);
     char playerCellType = maps.get(currentMapID).getCell(player.getActorRow(),player.getActorColumn()).getType();
     if(isMovementInput(playerCellType)){
       char movement = input.charAt(0);
@@ -182,10 +187,16 @@ public class GameManager {
     } else {
       moveNormally(input);
     }
+    if (player.getActorRow() != initialPlayerRow || player.getActorColumn() != initialPlayerColumn) {
+      currentMap.setCellType(initialPlayerRow,initialPlayerColumn,'r');
+      currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    }
+    monsters.get(0).moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
   }
 
   public void moveTo(int mapID,int row,int column) {
     currentMapID = mapID;
+    currentMap = new Map(maps.get(currentMapID));
     player.setActorRow(row);
     player.setActorColumn(column);
     System.out.println(maps.get(currentMapID).getMapName());
@@ -217,10 +228,6 @@ public class GameManager {
   }
 
   public boolean isFreeBlock(int row,int column) {
-    Map currentMap = new Map(maps.get(currentMapID));
-    currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
-    currentMap.setCellType(monsters.get(0).getActorRow(),monsters.get(0).getActorColumn(),'A');
-    currentMap.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
     char cellType = currentMap.getCell(row,column).getType();
     System.out.println(cellType);
     return (cellType != 'x' && cellType != '!' && cellType != 'A');

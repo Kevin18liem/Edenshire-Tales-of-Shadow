@@ -57,8 +57,8 @@ public class People extends Actor implements Movement{
         newPosColumn = newPosColumn - 1;
       }
     }
-    //currentMap.setCellType(getActorRow(),getActorColumn(),'!');
-    //currentMap.setCellType(newPosRow,newPosColumn,'r');
+    currentMap.setCellType(getActorRow(),getActorColumn(),'r');
+    currentMap.setCellType(newPosRow,newPosColumn,'!');
     setActorColumn(newPosColumn);
     setActorRow(newPosRow);
   }
