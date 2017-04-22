@@ -103,7 +103,8 @@ public class Monster extends Actor implements Movement{
       currentMap.getCell(posXMonster,posYMonster).getType() != 'a' &&
       currentMap.getCell(posXMonster,posYMonster).getType() != 's' &&
       currentMap.getCell(posXMonster,posYMonster).getType() != 'd' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 'M';
+      currentMap.getCell(posXMonster,posYMonster).getType() != 'M' &&
+      currentMap.getCell(posXMonster,posYMonster).getType() != '!';
   }
 
   /**
@@ -198,19 +199,48 @@ public class Monster extends Actor implements Movement{
    * @param posYPlayer Posisi Absis dari Player.
    * @param currentMap Peta yang ditempati saat ini.
    */
-  public void move(int posXPlayer, int posYPlayer, Map currentMap) {
-    pursue(currentMap,posXPlayer,posYPlayer);
-    System.out.println(actorRow + " " + actorColumn);
-    int i,j;
-    for (i = 0; i < currentMap.getRow(); i++) {
-      for (j = 0; j < currentMap.getColumn(); j++) {
-        System.out.print(currentPath[i][j] + " ");
-        if (j == currentMap.getColumn()-1) {
-          System.out.print("\n");
+  public void moveDjikstra(int posXPlayer, int posYPlayer, Map currentMap) {
+    int i;
+    int j;
+//    boolean djikstra = false;
+//    for (i = 0; i < currentMap.getRow(); i++) {
+//      for (j = 0; j < currentMap.getColumn(); j++) {
+//        if (currentMap.getCell(i,j).getType() == 'P') {
+//          djikstra = true;
+//        }
+//      }
+//    }
+//    if (djikstra) {
+      pursue(currentMap,posXPlayer,posYPlayer);
+      for (i = 0; i < currentMap.getRow(); i++) {
+        for (j = 0; j < currentMap.getColumn(); j++) {
+          System.out.print(currentPath[i][j] + " ");
+          if (j == currentMap.getColumn()-1) {
+            System.out.print("\n");
+          }
         }
       }
-    }
-    moveRandom(posXPlayer,posYPlayer,currentMap,1);
+      System.out.println(actorRow + " " + actorColumn);
+      int direction;
+      Random way = new Random();
+      direction = way.nextInt(4);
+    currentMap.setCellType(actorRow, actorColumn, 'r');
+      if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3) {
+        actorRow = actorRow - 1;
+      }
+      if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3) {
+        actorColumn = actorColumn + 1;
+      }
+      if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3) {
+        actorRow = actorRow + 1;
+      }
+      if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3) {
+        actorColumn = actorColumn - 1;
+      }
+    currentMap.setCellType(actorRow, actorColumn, 'A');
+      System.out.println(actorRow + " " + actorColumn);
+//    }
+//    moveRandom(posXPlayer,posYPlayer,currentMap,1);
 //    int direction;
 //    Random way = new Random();
 //    while (actorRow != posXPlayer || actorColumn != posYPlayer) {
@@ -232,46 +262,31 @@ public class Monster extends Actor implements Movement{
 
   /**
    * Prosedur Penggerak Random.
-   * @param posXPlayer Posisi Ordinat dari Player.
-   * @param posYPlayer Posisi Absis dari Player.
    * @param currentMap Peta yang ditempati saat ini.
    */
-  public void moveRandom(int posXPlayer, int posYPlayer, Map currentMap, int movementCode) {
+  public void moveRandom(Map currentMap) {
     int direction;
     Random way = new Random();
-    if (movementCode == 1) {
-      while (actorRow != posXPlayer || actorColumn != posYPlayer) {
-        direction = way.nextInt(4);
-        currentMap.setCellType(actorRow, actorColumn, 'r');
-        if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3) {
-          actorRow = actorRow - 1;
-        } else if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3) {
-          actorColumn = actorColumn + 1;
-        } else if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3) {
-          actorRow = actorRow + 1;
-        } else if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3) {
-          actorColumn = actorColumn - 1;
-        }
-        //currentMap.setCellType(actorRow, actorColumn, 'A');
-      }
-      System.out.println(actorRow + " " + actorColumn);
-    } else {
-      while (actorRow != posXPlayer || actorColumn != posYPlayer) {
-        direction = way.nextInt(4);
-        currentMap.setCellType(actorRow, actorColumn, 'r');
-        if (direction == 0 && isValid(currentMap, actorRow - 1, actorColumn)) {
-          actorRow = actorRow - 1;
-        } else if (direction == 1 && isValid(currentMap, actorRow, actorColumn + 1)) {
-          actorColumn = actorColumn + 1;
-        } else if (direction == 2 && isValid(currentMap, actorRow + 1, actorColumn)) {
-          actorRow = actorRow + 1;
-        } else if (direction == 3 && isValid(currentMap, actorRow, actorColumn - 1)) {
-          actorColumn = actorColumn - 1;
-        }
-        //currentMap.setCellType(actorRow, actorColumn, 'M');
-      }
-      System.out.println(actorRow + " " + actorColumn);
+    direction = way.nextInt(4);
+    currentMap.setCellType(actorRow, actorColumn, 'r');
+    if (direction == 0 && isInRange(currentMap,actorRow - 1,actorColumn) &&
+        isAvailable(currentMap, actorRow-1, actorColumn)) {
+      actorRow = actorRow - 1;
     }
+    if (direction == 1 && isInRange(currentMap,actorRow,actorColumn + 1) &&
+      isAvailable(currentMap, actorRow, actorColumn + 1)) {
+      actorColumn = actorColumn + 1;
+    }
+    if (direction == 2 && isInRange(currentMap,actorRow + 1,actorColumn) &&
+      isAvailable(currentMap, actorRow + 1, actorColumn)) {
+      actorRow = actorRow + 1;
+    }
+    if (direction == 3 && isInRange(currentMap,actorRow,actorColumn - 1) &&
+      isAvailable(currentMap, actorRow, actorColumn - 1)) {
+      actorColumn = actorColumn - 1;
+    }
+    currentMap.setCellType(actorRow, actorColumn, 'M');
+    System.out.println(actorRow + " " + actorColumn);
   }
   /**
    * Fungsi Pengecek Posisi dengan Tujuan.

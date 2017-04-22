@@ -81,6 +81,7 @@ public class GameManager {
       }
       player = new Player(playerName, 0, playerRow, playerColumn, 1);
       monsters.addElement(new Monster("Monster",0,3,3,10,10,10,10,10,10));
+      monsters.addElement(new Monster("Tes",0,2,3,10,10,10,10,10,10));
       peoples.addElement(new People("Orang",0,2,2,-1));
     } catch (IOException e) {
       e.printStackTrace();
@@ -92,6 +93,7 @@ public class GameManager {
     currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
     if (monsters.get(0).getHealth() > 0) {
       currentMap.setCellType(monsters.get(0).getActorRow(), monsters.get(0).getActorColumn(), 'A');
+      currentMap.setCellType(monsters.get(1).getActorRow(), monsters.get(1).getActorColumn(), 'M');
     }
     currentMap.setCellType(peoples.get(0).getActorRow(),peoples.get(0).getActorColumn(),'!');
     currentMap.renderMap();
@@ -146,7 +148,10 @@ public class GameManager {
   }
 
   public void handleMovement(String input) {
-    monsters.get(0).move(player.getActorRow(),player.getActorColumn(),maps.get(currentMapID));
+    Map currentMap = new Map(maps.get(currentMapID));
+    currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    monsters.get(0).moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
+    monsters.get(1).moveRandom(currentMap);
     peoples.get(0).move(maps.get(currentMapID));
     char playerCellType = maps.get(currentMapID).getCell(player.getActorRow(),player.getActorColumn()).getType();
     if(isMovementInput(playerCellType)){
