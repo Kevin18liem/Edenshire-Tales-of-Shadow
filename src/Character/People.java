@@ -1,25 +1,24 @@
 package Character;
 
+import Character.Dialogue.Dialogue;
 import Infrastructure.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by USER on 4/22/2017.
  */
 
 public class People extends Actor implements Movement{
-  private int dialogID;
-  public People(String peopleName, int mapID, int posX, int posY, int dialogID) {
+  private Dialogue dialogue;
+
+  public People(String peopleName, int mapID, int posX, int posY,Dialogue dialogue) {
     super(peopleName, mapID, posX, posY);
-    this.dialogID = dialogID;
+    this.dialogue = dialogue;
   }
 
-  public int getDialogID() {
-    return dialogID;
-  }
-
-  public void setDialogID(int dialogID) {
-    this.dialogID = dialogID;
+  public Dialogue getDialogue() {
+    return dialogue;
   }
 
   public boolean isValid(char typeCell) {
@@ -61,5 +60,24 @@ public class People extends Actor implements Movement{
     currentMap.setCellType(newPosRow,newPosColumn,'!');
     setActorColumn(newPosColumn);
     setActorRow(newPosRow);
+  }
+
+  public void talk() {
+    System.out.println();
+    int i = 0;
+    Scanner input = new Scanner(System.in);
+    for(String lines:dialogue.getDialogues()) {
+      if (!lines.equals("null")) {
+        if (i%2 == 0) {
+          System.out.print(actorName+": ");
+        } else {
+          System.out.print("You: ");
+        }
+        System.out.print(lines);
+        String enter = input.nextLine();
+        i = i + 1;
+      }
+    }
+    System.out.println();
   }
 }

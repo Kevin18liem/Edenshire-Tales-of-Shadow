@@ -1,0 +1,19 @@
+0 NPC1
+0
+Halo!
+Halo juga!
+#
+
+1 NPC2
+1
+Woi jing!
+Anjing!
+#
+
+2 NPC3
+2
+Pagi bang
+Ini malem bangsat!
+#
+
+-1

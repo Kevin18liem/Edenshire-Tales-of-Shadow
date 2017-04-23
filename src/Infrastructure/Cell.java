@@ -39,7 +39,11 @@ public class Cell implements Renderable{
   }
 
   public void render() {
-    if(type == 'r') {
+    if(type == 'r' ||
+       type == 'w' ||
+       type == 's' ||
+       type == 'a' ||
+       type == 'd') {
       System.out.print(" ");
     } else {
       System.out.print(type);

@@ -1,50 +1,61 @@
-1 1
-InitialMap
-5 5
-xxwxx
-xrrrx
-xrrrx
-xrrrd
-xsxxx
-2 9 2
-3 0 2
+0 InitialMap
+8 8
+xxxxxwxx
+xrrrrrrx
+xrrrrrrx
+xrrrrrrd
+xrrrxxrx
+xrrrxrrx
+xrrrrrrx
+xxxsxxxx
+1 7 2
+2 0 3
 -1
-1 2 0
-EastMap
-5 5
-xxxxx
-xrrrx
-arrrx
-xrrrx
-xxxxx
+3 2 0
+
+1 NorthMap
+8 8
+xxxxxxxx
+xxxxrrrx
+xrrrrrrx
+xrrrrrrx
+xrrrxxrx
+xrrrrrrx
+xrrrrrrx
+xxsxxxxx
 -1
--1
-0 3 4
--1
-NorthMap
-10 10
-xxxxxxxxxx
-xrrrrrrrrx
-xrrrrrrrrx
-xrrrrxxxxx
-xrrrrxrrrr
-xrrrrxrrrr
-xrrrrxrrrr
-xrrrrxxxxr
-xrrrrrrrxr
-xxsxxxxxxr
--1
-0 0 2
+0 0 5
 -1
 -1
-SouthMap
-4 4
-xxwx
-xrrx
-xrrx
-xxxx
-0 4 1
+
+2 SouthMap
+8 8
+xxxwxxxx
+xxxrrrrx
+xxxrrrxx
+xxxrrrrx
+xrrrrrrx
+xrrrrxxx
+xrrrrxxx
+xxxxxxxx
+0 7 3
 -1
 -1
 -1
-#
+
+3 Eastmap
+8 8
+xxxxxxxx
+xrrrrxrx
+arrrrrrx
+xxxrrrrx
+xxrrrrrx
+xrrrrrrx
+xrrrxxrx
+xxxxxxxx
+-1
+-1
+0 3 7
+-1
+
+-1

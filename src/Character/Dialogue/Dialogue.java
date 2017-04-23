@@ -1,4 +1,4 @@
-package Dialogue;
+package Character.Dialogue;
 
 import java.util.Scanner;
 import java.util.Vector;
@@ -19,15 +19,5 @@ public class Dialogue {
 
   public int getDialogueSize() {
     return dialogues.size();
-  }
-  
-  public void talk() {
-    Scanner input = new Scanner(System.in);
-    for(String dialogue:dialogues) {
-      if (!dialogue.equals("null")) {
-        System.out.println(dialogue);
-        String enter = input.nextLine();
-      }
-    }
   }
 }
