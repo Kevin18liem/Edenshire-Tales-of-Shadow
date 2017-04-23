@@ -1,0 +1,25 @@
+0 Main Quest
+Dummy Mission
+talk
+Talk to NPC 2 at NorthMap
+null
+1 1 0 1
+1
+.
+Dummy Mission 2
+talk
+Talk to NPC 1 at InitialMap
+null
+0 2
+1
+.
+Dummy Mission 3
+kill
+Kill 2 wolf at EastMap
+Wolf
+2 1
+2
+.
+#
+
+-1

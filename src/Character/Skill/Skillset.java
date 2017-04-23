@@ -1,4 +1,4 @@
-package Skill;
+package Character.Skill;
 
 import java.util.Vector;
 
@@ -27,7 +27,10 @@ public class Skillset {
   }
 
   public void unlockSkill() {
-    int skillIdx = skills.size() -1;
-    skills.get(skillIdx).unlock();
+    int i = 0;
+    while (skills.get(i).isUnlocked()) {
+      i = i + 1;
+    }
+    skills.get(i).unlock();
   }
 }

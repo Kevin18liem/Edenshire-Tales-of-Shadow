@@ -5,7 +5,7 @@ import Infrastructure.Map;
 /**
  * Created by ClementAndreas on 4/22/2017.
  */
-public class Monster extends Actor implements Movement{
+public abstract class Monster extends Actor implements Movement{
 
   private char type;
   private int [][] currentPath;
@@ -107,7 +107,10 @@ public class Monster extends Actor implements Movement{
       currentMap.getCell(posXMonster,posYMonster).getType() != 's' &&
       currentMap.getCell(posXMonster,posYMonster).getType() != 'd' &&
       currentMap.getCell(posXMonster,posYMonster).getType() != 'M' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != '!';
+      currentMap.getCell(posXMonster,posYMonster).getType() != '!' &&
+      currentMap.getColumn() - 1 != posYMonster &&
+      currentMap.getRow() - 1 != posXMonster &&
+      posYMonster != 0 && posXMonster != 0;
   }
 
   /**
@@ -212,6 +215,14 @@ public class Monster extends Actor implements Movement{
       return 3;
     } else if (actorRow == posXPlayer && actorColumn - 1 == posYPlayer) {
       return 4;
+    } else if (actorRow - 1 == posXPlayer && actorColumn - 1 == posYPlayer) {
+      return 5;
+    } else if (actorRow - 1 == posXPlayer && actorColumn + 1 == posYPlayer) {
+      return 6;
+    } else if (actorRow + 1 == posXPlayer && actorColumn + 1 == posYPlayer) {
+      return 7;
+    } else if (actorRow + 1 == posXPlayer && actorColumn - 1 == posYPlayer) {
+      return 8;
     }
     return 0;
   }
@@ -235,45 +246,78 @@ public class Monster extends Actor implements Movement{
 //    }
 //    if (djikstra) {
     pursue(currentMap, posXPlayer, posYPlayer);
-    for (i = 0; i < currentMap.getRow(); i++) {
-      for (j = 0; j < currentMap.getColumn(); j++) {
-        System.out.print(currentPath[i][j] + " ");
-        if (j == currentMap.getColumn() - 1) {
-          System.out.print("\n");
-        }
-      }
-    }
-    System.out.println(actorRow + " " + actorColumn);
+//    System.out.println("Tes");
+//    for (i = 0; i < currentMap.getRow(); i++) {
+//      for (j = 0; j < currentMap.getColumn(); j++) {
+//        System.out.print(currentPath[i][j] + " ");
+//        if (j == currentMap.getColumn() - 1) {
+//          System.out.print("\n");
+//        }
+//      }
+//    }
+//    System.out.println(actorRow + " " + actorColumn);
     currentMap.setCellType(actorRow, actorColumn, 'r');
     if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 0) {
       int direction;
       Random way = new Random();
       direction = way.nextInt(4);
-      if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3) {
+      if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3
+        && actorRow - 1 != 0) {
         actorRow = actorRow - 1;
       }
-      if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3) {
+      if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3
+        && actorColumn + 1 != currentMap.getColumn() - 1) {
         actorColumn = actorColumn + 1;
       }
-      if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3) {
+      if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3
+        && actorRow + 1 != currentMap.getRow() - 1) {
         actorRow = actorRow + 1;
       }
-      if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3) {
+      if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3
+        && actorColumn - 1 != 0) {
         actorColumn = actorColumn - 1;
       }
     } else {
-      if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 1) {
+      if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 1 &&
+         actorRow - 1 != 0) {
         actorRow = actorRow - 1;
-      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 2) {
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 2
+        && actorColumn + 1 != currentMap.getColumn() - 1) {
         actorColumn = actorColumn + 1;
-      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 3) {
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 3
+        && actorRow + 1 != currentMap.getRow() - 1) {
         actorRow = actorRow + 1;
-      } else {
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 4
+        && actorColumn - 1 != 0) {
         actorColumn = actorColumn - 1;
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 5) {
+        if (isAvailable(currentMap,actorRow-1, actorColumn)) {
+          actorRow = actorRow - 1;
+        } else if (isAvailable(currentMap, actorRow, actorColumn - 1)) {
+          actorColumn = actorColumn - 1;
+        }
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 6) {
+        if (isAvailable(currentMap, actorRow - 1, actorColumn)) {
+          actorRow = actorRow - 1;
+        } else if (isAvailable(currentMap, actorRow, actorColumn + 1)) {
+          actorColumn = actorColumn + 1;
+        }
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 7) {
+        if (isAvailable(currentMap,actorRow + 1, actorColumn)) {
+          actorRow = actorRow + 1;
+        } else if (isAvailable(currentMap, actorRow, actorRow + 1)) {
+          actorColumn = actorColumn + 1;
+        }
+      } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 8) {
+        if (isAvailable(currentMap, actorRow + 1, actorColumn)) {
+          actorRow = actorRow + 1;
+        } else if (isAvailable(currentMap, actorRow, actorColumn - 1)) {
+          actorColumn = actorColumn - 1;
+        }
       }
     }
     currentMap.setCellType(actorRow, actorColumn, 'A');
-    System.out.println(actorRow + " " + actorColumn);
+    //System.out.println(actorRow + " " + actorColumn);
   }
 
   /**
@@ -324,4 +368,7 @@ public class Monster extends Actor implements Movement{
     return type;
   }
 
+  public abstract int attack(int x);
+
+  public abstract int specialAttack(int x);
 }

@@ -17,7 +17,7 @@ public class Main {
     System.out.print("What do you like to play as? ");
     String playerSkillset = input.nextLine();
     System.out.println("Skillset chosen: "+playerSkillset);*/
-    GameManager Eedenshire = new GameManager("Edwin","Mage");
+    GameManager Eedenshire = new GameManager("Edwin","Warrior");
     Eedenshire.renderGame();
     Eedenshire.runGame();
   }

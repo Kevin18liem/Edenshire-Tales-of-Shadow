@@ -20,4 +20,8 @@ public class Dialogue {
   public int getDialogueSize() {
     return dialogues.size();
   }
+
+  public void setDialogues(Vector<String> dialogues) {
+    this.dialogues = dialogues;
+  }
 }

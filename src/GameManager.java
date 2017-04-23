@@ -1,12 +1,20 @@
 import Character.Dialogue.Dialogue;
 import Character.Monster;
+import Character.Dragon;
+import Character.Goblin;
+import Character.GolemKnight;
+import Character.Necromancer;
+import Character.OrcWarchief;
+import Character.Wolf;
 import Character.People;
 import Character.Player;
 import Infrastructure.Cell;
 import Infrastructure.Gate;
 import Infrastructure.Map;
-import Skill.Skillset;
-import Skill.Skill;
+import Quest.Mission;
+import Quest.Quest;
+import Character.Skill.Skillset;
+import Character.Skill.Skill;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,19 +29,19 @@ import static java.lang.Math.abs;
  */
 public class GameManager {
   private Vector<Map> maps;
-  private Skillset skillset;
   private Player player;
   private int currentMapID;
   private Vector<Monster> monsters;
   private Vector<People> peoples;
+  private Vector<Quest> quests;
   private Map currentMap;
 
   public GameManager(String playerName,String playerSkillset) {
     initiateMap();
     initiatePlayer(playerName,playerSkillset);
+    initiateQuest();
     inititatePeople();
     initiateMonster();
-    System.out.println(monsters.size());
   }
 
   public void initiateMap() {
@@ -90,18 +98,60 @@ public class GameManager {
         }
         skillsetName = readSkillset.nextLine();
       }
-      skillset = new Skillset(skillsetName);
+      Skillset skillset = new Skillset(skillsetName);
       skillName = readSkillset.nextLine();
       while (!skillName.equals("#")) {
         skillDesc = readSkillset.nextLine();
-        skillEffect = readSkillset.nextLine();
-        effectValue = readSkillset.nextInt();
-        buffer = readSkillset.nextLine();
-        skillset.addSkill(new Skill(skillName, skillDesc, skillEffect, effectValue));
+        skillset.addSkill(new Skill(skillName, skillDesc));
         skillName = readSkillset.nextLine();
       }
-      player = new Player(playerName, 0, playerRow, playerColumn);
+      player = new Player(playerName, 0, playerRow, playerColumn,skillset);
       currentMap.setCellType(player.getActorRow(), player.getActorColumn(), 'P');
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void initiateQuest() {
+    try {
+      int questId,missionTarget;
+      String questName, buffer, missionName, missionType, missionIns, missionMonster;
+      quests = new Vector<Quest>();
+      Vector<Mission> missions;
+      Vector<Integer> actorIds;
+      Scanner readQuest = new Scanner(new FileInputStream("src/quest.txt"));
+      questId = readQuest.nextInt();
+      while (questId != -1) {
+        questName = readQuest.next();
+        buffer = readQuest.nextLine();
+        buffer = readQuest.nextLine();
+        missions = new Vector<Mission>();
+        while (!buffer.equals("#")) {
+          while (!buffer.equals(".")) {
+            actorIds = new Vector<Integer>();
+            missionName = buffer;
+            missionType = readQuest.nextLine();
+            missionIns = readQuest.nextLine();
+            missionMonster = readQuest.nextLine();
+            while (readQuest.hasNextInt()) {
+              actorIds.addElement(readQuest.nextInt());
+            }
+            missionTarget = actorIds.get(actorIds.size() - 1);
+            actorIds.removeElementAt(actorIds.size() - 1);
+            for (Integer test:actorIds) {
+              System.out.println(test);
+            }
+            System.out.println();
+            missions.addElement(new Mission(missionName, missionType, missionIns, actorIds,missionTarget,missionMonster));
+            buffer = readQuest.nextLine();
+            buffer = readQuest.nextLine();
+          }
+          buffer = readQuest.nextLine();
+        }
+        quests.addElement(new Quest(questName, missions));
+        questId = readQuest.nextInt();
+      }
+      quests.get(0).startQuest();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -120,23 +170,27 @@ public class GameManager {
         peopleName = readPeople.next();
         mapId = readPeople.nextInt();
         buffer = readPeople.nextLine();
-        Vector<String> dialogues = new Vector<String>();
+        Vector<Dialogue> dialogueSet = new Vector<Dialogue>();
         buffer = readPeople.nextLine();
         while(!buffer.equals("#")) {
-          dialogues.addElement(buffer);
-          buffer =readPeople.nextLine();
+          Vector<String> dialogues = new Vector<String>();
+          while (!buffer.equals(".")) {
+            dialogues.addElement(buffer);
+            buffer = readPeople.nextLine();
+          }
+          dialogueSet.addElement(new Dialogue(dialogues));
+          buffer = readPeople.nextLine();
         }
         do {
           peopleRow = row.nextInt(maps.get(currentMapID).getRow());
           peopleColumn = column.nextInt(maps.get(currentMapID).getColumn());
         } while (currentMap.getCell(peopleRow,peopleColumn).getType() != 'r');
-        peoples.addElement(new People(peopleName,mapId,peopleRow,peopleColumn,new Dialogue(dialogues)));
+        peoples.addElement(new People(peopleName,mapId,peopleRow,peopleColumn,dialogueSet));
         peopleId = readPeople.nextInt();
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   public void initiateMonster() {
@@ -152,13 +206,28 @@ public class GameManager {
         mapId = readMonster.nextInt();
         row = readMonster.nextInt();
         column = readMonster.nextInt();
-        health = readMonster.nextInt();
-        strength = readMonster.nextInt();
-        defense = readMonster.nextInt();
-        agility = readMonster.nextInt();
-        intelligence = readMonster.nextInt();
-        exp = readMonster.nextInt();
-        monsters.addElement(new Monster(monsterName,mapId,row,column,health,strength,defense,agility,intelligence,exp));
+
+        switch (monsterName) {
+          case "Dragon":
+            monsters.addElement(new Dragon(mapId, row, column));
+            break;
+          case "Goblin":
+            monsters.addElement(new Goblin(mapId, row, column));
+            break;
+          case "Golem Knight":
+            monsters.addElement(new GolemKnight(mapId, row, column));
+            break;
+          case "Necromancer":
+            monsters.addElement(new Necromancer(mapId, row, column));
+            break;
+          case "Orc Warchief":
+            monsters.addElement(new OrcWarchief(mapId, row, column));
+            break;
+          case "Wolf":
+            monsters.addElement(new Wolf(mapId, row, column));
+            break;
+        }
+
         monsterId = readMonster.nextInt();
       }
     } catch (IOException e) {
@@ -175,8 +244,8 @@ public class GameManager {
       }
     }
     for (Monster monster:monsters) {
-      if (monster.getMapID() == currentMapID) {
-        toRender.setCellType(monster.getActorRow(),monster.getActorColumn(),'A');
+      if (monster.getMapID() == currentMapID && monster.getHealth() > 0) {
+        toRender.setCellType(monster.getActorRow(),monster.getActorColumn(),monster.getType());
       }
     }
     toRender.renderMap();
@@ -193,8 +262,13 @@ public class GameManager {
         viewSkills();
       } else if (input.equals("talk")) {
         talk();
+      } else if (input.equals("quest")) {
+        viewQuest();
       } else if (isMovementInput(input)) {
         handleMovement(input);
+        if (currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() != 'P') {
+          battleMode(monsters.get(getMonsterId(player.getActorRow(),player.getActorColumn())));
+        }
         renderGame();
       } else {
         renderGame();
@@ -205,22 +279,25 @@ public class GameManager {
   }
 
   public void viewStats() {
-    System.out.println("Name      : " + player.getActorName());
-    System.out.println("Level     : " + player.getLevel());
-    System.out.println("Health    : " + player.getHealth());
-    System.out.println("Strength  : " + player.getStrength());
-    System.out.println("Defense   : " + player.getDefense());
+    System.out.println("Name        : " + player.getActorName());
+    System.out.println("Level       : " + player.getLevel());
+    System.out.println("Health      : " + player.getHealth());
+    System.out.println("Strength    : " + player.getStrength());
+    System.out.println("Defense     : " + player.getDefense());
+    System.out.println("Agility     : " + player.getAgility());
+    System.out.println("Intelligence: " + player.getIntelligence());
+    System.out.println("Exp         : " + player.getExperience()+"/"+player.getLevel()*150);
   }
 
   public void viewSkills() {
-    for(int i = 0; i < skillset.getSkills().size(); i++) {
-      System.out.print(skillset.getSkills().get(i).getSkillName()+" [");
-      if (skillset.getSkills().get(i).isUnlocked()) {
+    for(int i = 0; i < player.getSkillset().getSkills().size(); i++) {
+      System.out.print(player.getSkillset().getSkills().get(i).getSkillName()+" [");
+      if (player.getSkillset().getSkills().get(i).isUnlocked()) {
         System.out.print("x]: ");
       } else {
         System.out.print(" ]: ");
       }
-      System.out.println(skillset.getSkills().get(i).getSkillDesc());
+      System.out.println(player.getSkillset().getSkills().get(i).getSkillDesc());
     }
   }
 
@@ -230,6 +307,19 @@ public class GameManager {
       peoples.get(id).talk();
     } else {
       System.out.println("No people nearby");
+    }
+    for(Quest quest:quests) {
+      if (quest.isActive() && quest.getCurrentMission().getType().equals("talk")) {
+        if (id == quest.getCurrentMission().getActorId().get(0)) {
+          int i = 0;
+          Vector<Integer> actorIds = quest.getCurrentMission().getActorId();
+          while (i<actorIds.size()) {
+            peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
+            i = i + 2;
+          }
+          quest.progressQuest();
+        }
+      }
     }
     renderGame();
   }
@@ -257,6 +347,23 @@ public class GameManager {
       return i;
     } else {
       return -1;
+    }
+  }
+
+  public void viewQuest() {
+    for (Quest quest:quests) {
+      if (quest.isActive()) {
+        if (quest.getCurrentMission().getType().equals("talk")) {
+          System.out.println(quest.getQuestName() + " - " + quest.getCurrentMission().getMissionName() +
+            ": " + quest.getCurrentMission().getInstruction());
+        } else {
+          System.out.println(quest.getQuestName() + " - " + quest.getCurrentMission().getMissionName() +
+            ": " + quest.getCurrentMission().getInstruction()+" ("+quest.getCurrentMission().getCount()+"/"+
+            quest.getCurrentMission().getTarget()+")");
+        }
+      } else if (quest.isComplete()) {
+        System.out.println(quest.getQuestName()+" -- Completed");
+      }
     }
   }
 
@@ -304,8 +411,14 @@ public class GameManager {
       }
     }
     for (Monster toMove:monsters) {
-      if (toMove.getMapID() == currentMapID) {
-        toMove.moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
+      if (toMove.getMapID() == currentMapID && toMove.getHealth() > 0) {
+        switch (toMove.getType()) {
+          case 'A':
+            toMove.moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
+            break;
+          case 'M':
+            toMove.moveRandom(currentMap);
+        }
       }
     }
   }
@@ -317,6 +430,9 @@ public class GameManager {
     player.setActorRow(row);
     player.setActorColumn(column);
     currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
+    if (currentMapID == 0) {
+      player.setHealth(player.getStrength() * 5);
+    }
     System.out.println(maps.get(currentMapID).getMapName());
   }
 
@@ -349,6 +465,96 @@ public class GameManager {
 
   public boolean isFreeBlock(int row,int column) {
     char cellType = currentMap.getCell(row,column).getType();
-    return (cellType != 'x' && cellType != '!' && cellType != 'A' && cellType != 'M');
+    return (cellType != 'x' && cellType != '!');
+  }
+
+  public int getMonsterId(int row, int column) {
+    boolean found = false;
+    int i = 0;
+    while (!found && i < monsters.size()) {
+      if (monsters.get(i).getMapID() == currentMapID &&
+          monsters.get(i).getActorRow() == row &&
+          monsters.get(i).getActorColumn() == column) {
+        found = true;
+      } else {
+        i = i + 1;
+      }
+    }
+    if (found) {
+      return i;
+    } else {
+      return -1;
+    }
+  }
+
+  public void battleMode(Monster enemy) {
+    Random attackCode;
+    attackCode = new Random();
+    int attackType;
+    attackType = 0;
+    int damageToPlayer;
+    int damageToMonster;
+    damageToMonster = 0;
+    damageToPlayer = 0;
+    while (player.getHealth() > 0 && enemy.getHealth() > 0) {
+      System.out.println(player.getActorName()+": "+player.getHealth());
+      System.out.println(enemy.getActorName()+": "+enemy.getHealth());
+      attackType = attackCode.nextInt(1);
+      if (player.getAgility() < enemy.getAgility()) {
+        System.out.println("Enemy's turn");
+        if (attackType == 0) {
+          damageToPlayer = enemy.attack(player.getDefense());
+        } else if (attackType == 1) {
+          damageToPlayer = enemy.specialAttack(player.getDefense());
+        }
+        player.setHealth(player.getHealth() - damageToPlayer);
+        System.out.println(player.getActorName()+": "+player.getHealth());
+        System.out.println(enemy.getActorName()+": "+enemy.getHealth());
+        System.out.println("Your turn");
+        System.out.print("> ");
+        if (player.getHealth() > 0) {
+          damageToMonster = player.attack(inputAttackKey(), enemy.getDefense());
+        }
+        enemy.setHealth(enemy.getHealth() - damageToMonster);
+        System.out.println(player.getActorName()+": "+player.getHealth());
+        System.out.println(enemy.getActorName()+": "+enemy.getHealth());
+      } else {
+        damageToMonster = player.attack(inputAttackKey(), enemy.getDefense());
+        enemy.setHealth(enemy.getHealth() - damageToMonster);
+        if (enemy.getHealth() > 0) {
+          if (attackType == 0) {
+            damageToPlayer = enemy.attack(player.getDefense());
+          } else {
+            damageToPlayer = enemy.specialAttack(player.getDefense());
+          }
+          player.setHealth(player.getHealth() - damageToPlayer);
+        }
+      }
+    }
+    if (enemy.getHealth() <= 0) {
+      player.gainExp(enemy.getExperience());
+      currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'r');
+      for(Quest quest:quests) {
+        if (quest.isActive() && quest.getCurrentMission().getType().equals("kill")) {
+          if (enemy.getActorName().equals(quest.getCurrentMission().getMonster())) {
+            int i = 0;
+            Vector<Integer> actorIds = quest.getCurrentMission().getActorId();
+            while (i<actorIds.size()) {
+              peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
+              i = i + 2;
+            }
+            quest.progressQuest();
+            System.out.println(quest.getCurrentMission().getCount());
+          }
+        }
+      }
+    } else {
+      System.out.println("Game Over");
+    }
+  }
+
+  public char inputAttackKey() {
+    Scanner key = new Scanner(System.in);
+    return key.next().charAt(0);
   }
 }

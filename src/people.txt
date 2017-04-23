@@ -1,19 +1,38 @@
 0 NPC1
 0
-Halo!
-Halo juga!
+Ngomong ama NPC2 sana
+Dimane?
+Disitu
+Anjing lu
+.
+Nah karang ngomong ama gue
+cot jing
+.
+Udah pergi sana
+null
+.
 #
 
 1 NPC2
 1
-Woi jing!
-Anjing!
+Cie jalanan quest dummy ya?
+Anjing bacot lu
+.
+Udah bang ngapain ngomong ama gue lagi
+null
+.
 #
 
 2 NPC3
 2
 Pagi bang
 Ini malem bangsat!
+.
+Makasi bang udah dibunuh si anjing
+Mana duitnye
+Anjing hero tajir
+Diem lu
+.
 #
 
 -1

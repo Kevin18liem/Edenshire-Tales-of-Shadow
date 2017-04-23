@@ -4,21 +4,24 @@ import Character.Dialogue.Dialogue;
 import Infrastructure.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Vector;
 
 /**
  * Created by USER on 4/22/2017.
  */
 
 public class People extends Actor implements Movement{
-  private Dialogue dialogue;
+  private Vector<Dialogue> dialogue;
+  private int dialogueId;
 
-  public People(String peopleName, int mapID, int posX, int posY,Dialogue dialogue) {
+  public People(String peopleName, int mapID, int posX, int posY, Vector<Dialogue> dialogue) {
     super(peopleName, mapID, posX, posY);
     this.dialogue = dialogue;
+    dialogueId = 0;
   }
 
-  public Dialogue getDialogue() {
-    return dialogue;
+  public void setDialogueId(int dialogueId) {
+    this.dialogueId = dialogueId;
   }
 
   public boolean isValid(char typeCell) {
@@ -34,7 +37,7 @@ public class People extends Actor implements Movement{
     int moveTo;
     newPosColumn = getActorColumn();
     newPosRow = getActorRow();
-    moveTo = direction.nextInt() % 4 + 1;
+    moveTo = direction.nextInt(4) + 1;
     if (moveTo == 1) {
       typeCell = currentMap.getCell(newPosRow - 1,newPosColumn).getType();
       if (isValid(typeCell)) {
@@ -66,17 +69,17 @@ public class People extends Actor implements Movement{
     System.out.println();
     int i = 0;
     Scanner input = new Scanner(System.in);
-    for(String lines:dialogue.getDialogues()) {
+    for(String lines:dialogue.get(dialogueId).getDialogues()) {
       if (!lines.equals("null")) {
         if (i%2 == 0) {
-          System.out.print(actorName+": ");
+          System.out.print(actorName+"  : ");
         } else {
-          System.out.print("You: ");
+          System.out.print("You   : ");
         }
         System.out.print(lines);
         String enter = input.nextLine();
-        i = i + 1;
       }
+      i = i + 1;
     }
     System.out.println();
   }
