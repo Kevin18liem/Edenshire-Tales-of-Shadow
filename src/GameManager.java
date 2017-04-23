@@ -32,9 +32,40 @@ public class GameManager {
   private Player player;
   private int currentMapID;
   private Vector<Monster> monsters;
+
+  public Vector<Map> getMaps() {
+    return maps;
+  }
+
+  public Player getPlayer() {
+    return player;
+  }
+
+  public int getCurrentMapID() {
+    return currentMapID;
+  }
+
+  public Vector<Monster> getMonsters() {
+    return monsters;
+  }
+
+  public Vector<People> getPeoples() {
+    return peoples;
+  }
+
+  public Vector<Quest> getQuests() {
+    return quests;
+  }
+
+  public Map getCurrentMap() {
+    return currentMap;
+  }
+
   private Vector<People> peoples;
   private Vector<Quest> quests;
   private Map currentMap;
+
+
 
   public GameManager(String playerName,String playerSkillset) {
     initiateMap();
@@ -138,10 +169,6 @@ public class GameManager {
             }
             missionTarget = actorIds.get(actorIds.size() - 1);
             actorIds.removeElementAt(actorIds.size() - 1);
-            for (Integer test:actorIds) {
-              System.out.println(test);
-            }
-            System.out.println();
             missions.addElement(new Mission(missionName, missionType, missionIns, actorIds,missionTarget,missionMonster));
             buffer = readQuest.nextLine();
             buffer = readQuest.nextLine();
@@ -432,6 +459,7 @@ public class GameManager {
     currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'P');
     if (currentMapID == 0) {
       player.setHealth(player.getStrength() * 5);
+      initiateMonster();
     }
     System.out.println(maps.get(currentMapID).getMapName());
   }
