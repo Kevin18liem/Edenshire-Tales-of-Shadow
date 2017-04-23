@@ -1,6 +1,6 @@
-package Character;
+package character;
 
-import Character.Dialogue.Dialogue;
+import character.Dialogue.Dialogue;
 import Infrastructure.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,21 +14,42 @@ public class People extends Actor implements Movement{
   private Vector<Dialogue> dialogue;
   private int dialogueId;
 
+  /**
+   * Constructor NPC People.
+   * @param peopleName Nama dari NPC People.
+   * @param mapID Kode Map dari NPC People.
+   * @param posX Posisi Ordinat dari NPC People.
+   * @param posY Posisi Absis dari NPC People.
+   * @param dialogue Rangkaian Dialog dari NPC People.
+   */
   public People(String peopleName, int mapID, int posX, int posY, Vector<Dialogue> dialogue) {
     super(peopleName, mapID, posX, posY);
     this.dialogue = dialogue;
     dialogueId = 0;
   }
 
+  /**
+   * Setter ID Dialog
+   * @param dialogueId ID Dialog.
+   */
   public void setDialogueId(int dialogueId) {
     this.dialogueId = dialogueId;
   }
 
+  /**
+   * Fungsi Pengecek Jalan Valid.
+   * @param typeCell Tipe dari Sel yang dilalui.
+   * @return boolean apakah gerakan valid atau tidak.
+   */
   public boolean isValid(char typeCell) {
     return ! (typeCell == 'x' || typeCell == 'w' || typeCell == 'a' || typeCell == 'd'
         || typeCell == 's' || typeCell == 'P' || typeCell == 'A'  || typeCell == 'M' || typeCell == '!');
   }
 
+  /**
+   * Prosedur Pencari Jalan.
+   * @param currentMap Peta yang ditempati saat ini.
+   */
   public void move(Map currentMap) {
     Random direction = new Random();
     char typeCell;
@@ -65,6 +86,9 @@ public class People extends Actor implements Movement{
     setActorRow(newPosRow);
   }
 
+  /**
+   * Prosedur Pencetak Dialog NPC People.
+   */
   public void talk() {
     System.out.println();
     int i = 0;
@@ -74,6 +98,7 @@ public class People extends Actor implements Movement{
         if (i%2 == 0) {
           System.out.print(actorName+"  : ");
         } else {
+          assert i % 2 != 0;
           System.out.print("You   : ");
         }
         System.out.print(lines);

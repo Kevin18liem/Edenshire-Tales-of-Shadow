@@ -1,4 +1,4 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 4/23/2017.
@@ -28,6 +28,7 @@ public class Necromancer extends Monster {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
+    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
     return 1;
   }
 

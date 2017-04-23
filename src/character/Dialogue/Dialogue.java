@@ -1,6 +1,5 @@
-package Character.Dialogue;
+package character.Dialogue;
 
-import java.util.Scanner;
 import java.util.Vector;
 
 /**
@@ -9,18 +8,34 @@ import java.util.Vector;
 public class Dialogue {
   private Vector<String> dialogues;
 
+  /**
+   * Constructor Dialog.
+   * @param dialogues Kumpulan Dialog NPC.
+   */
   public Dialogue(Vector<String> dialogues) {
     this.dialogues = dialogues;
   }
 
+  /**
+   * Getter Dialog.
+   * @return Kumpulan Dialog NPC.
+   */
   public Vector<String> getDialogues() {
     return dialogues;
   }
 
+  /**
+   * Getter Count Dialog.
+   * @return Count dari Dialog NPC.
+   */
   public int getDialogueSize() {
     return dialogues.size();
   }
 
+  /**
+   * Setter Dialog
+   * @param dialogues Dialog baru NPC.
+   */
   public void setDialogues(Vector<String> dialogues) {
     this.dialogues = dialogues;
   }

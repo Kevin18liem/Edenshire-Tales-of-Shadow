@@ -1,43 +1,47 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class Dragon extends Monster {
+public class Goblin extends Monster {
   protected String attackName;
   protected String specialAttackName;
 
   /**
-   * Constructor Dragon.
+   * Constructor Goblin.
    * @param monsterMapId Kode Map dari Monster.
    * @param monsterX Posisi Ordinat dari Monster.
    * @param monsterY Posisi Absis dari Monster.
    */
-  public Dragon(int monsterMapId, int monsterX, int monsterY) {
-    super("Nefarian", monsterMapId, monsterX, monsterY, 250, 50, 30, 35, 40, 1000, 'M');
-    attackName = "Cleave";
-    specialAttackName = "Shsdowflame Breath";
+  public Goblin(int monsterMapId, int monsterX, int monsterY) {
+    super("Goblin", monsterMapId, monsterX, monsterY, 50, 10, 5, 5,2,50, 'M');
+    attackName = "Slash";
+    specialAttackName = "Pounce";
   }
 
   /**
-   * Normal Attack Calculator Dragon.
+   * Normal Attack Calculator Goblin.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Normal Attack Dragon.
+   * @return nilai Damage Normal Attack Goblin.
    */
   public int attack(int defPlayer) {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
+    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
     return 1;
   }
 
   /**
-   * Special Attack Calculator Dragon.
+   * Special Attack Calculator Goblin.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Special Attack Dragon.
+   * @return nilai Damage Special Attack Goblin.
    */
   public int specialAttack(int defPlayer) {
-    return getIntelligence();
+    if (getAgility() > defPlayer) {
+      return 2 * (getAgility() - defPlayer);
+    }
+    return 1;
   }
 
   /**
@@ -56,3 +60,5 @@ public class Dragon extends Monster {
     return specialAttackName;
   }
 }
+
+// Goblin, Wolf, Dragon, Golem Knight, Orc, Necromancer

@@ -1,46 +1,44 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class Goblin extends Monster {
+public class Wolf extends Monster{
   protected String attackName;
   protected String specialAttackName;
 
   /**
-   * Constructor Goblin.
+   * Constructor Wolf.
    * @param monsterMapId Kode Map dari Monster.
    * @param monsterX Posisi Ordinat dari Monster.
    * @param monsterY Posisi Absis dari Monster.
    */
-  public Goblin(int monsterMapId, int monsterX, int monsterY) {
-    super("Goblin", monsterMapId, monsterX, monsterY, 50, 10, 5, 5,2,50, 'M');
-    attackName = "Slash";
-    specialAttackName = "";
+  public Wolf(int monsterMapId, int monsterX, int monsterY) {
+    super("Wolf", monsterMapId, monsterX, monsterY, 15, 2, 3, 10, 2, 40, 'A');
+    attackName = "Bite";
+    specialAttackName = "Swift Strike";
   }
 
   /**
-   * Normal Attack Calculator Goblin.
+   * Normal Attack Calculator Wolf.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Normal Attack Goblin.
+   * @return nilai Damage Normal Attack Wolf.
    */
   public int attack(int defPlayer) {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
+    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
     return 1;
   }
 
   /**
-   * Special Attack Calculator Goblin.
+   * Special Attack Calculator Wolf.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Special Attack Goblin.
+   * @return nilai Special Attack Wolf.
    */
   public int specialAttack(int defPlayer) {
-    if (getAgility() > defPlayer) {
-      return 3*(getAgility() - defPlayer);
-    }
-    return 1;
+    return attack(defPlayer);
   }
 
   /**
@@ -52,12 +50,10 @@ public class Goblin extends Monster {
   }
 
   /**
-   * Getter Nama Special Attack.
+   * Getter dari Special Attack.
    * @return nama Special Attack.
    */
   public String getSpecialAttackName() {
     return specialAttackName;
   }
 }
-
-// Goblin, Wolf, Dragon, Golem Knight, Orc, Necromancer

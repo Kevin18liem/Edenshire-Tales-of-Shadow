@@ -1,7 +1,6 @@
-package Character;
+package character;
 
-import Character.Skill.Skillset;
-
+import character.Skill.Skillset;
 import java.util.Random;
 
 /**
@@ -11,7 +10,19 @@ public class Player extends Actor {
   private int level;
   private Skillset skillset;
 
-  public Player(String playerName, int mapID, int posX, int posY,Skillset skillset) {
+  /**
+   * Constructor Player.
+   * @param playerName Nama dari Player.
+   * @param mapID Kode Map dari Player.
+   * @param posX Posisi Ordinat dari Player.
+   * @param posY Posisi Absis dari Player.
+   * @param skillset Skill Set dari PlayStyle Player.
+   */
+  public Player(String playerName,
+                int mapID,
+                int posX,
+                int posY,
+                Skillset skillset) {
     super(playerName,mapID,posX,posY);
     strength = 8;
     health = strength * 5;
@@ -23,26 +34,47 @@ public class Player extends Actor {
     this.skillset = skillset;
   }
 
+  /**
+   * Getter SkillSet Player.
+   * @return Skill Set dari PlayStyle Pilihan Player.
+   */
   public Skillset getSkillset() {
     return skillset;
   }
 
+  /**
+   * Getter dari Level Player.
+   * @return Level dari Player saat ini.
+   */
   public int getLevel() {
     return level;
   }
 
+  /**
+   * Setter dari Level Player
+   * @param level Level Baru Player.
+   */
   public void setLevel(int level) {
     this.level = level;
   }
 
+  /**
+   * Setter dari Experience Player.
+   * @param experience Experience Baru Player.
+   */
   public void setExperience(int experience) {
     this.experience = experience;
   }
 
+  /**
+   * Prosedur Menambahkan Experience dan Level Player.
+   * @param experience Experience yang didapat Player lewat Battle.
+   */
   public void gainExp(int experience) {
     if (this.experience + experience >= getLevel()*150) {
       setLevel(getLevel() + 1);
-      setExperience((this.experience + experience) % ((getLevel() - 1) * 150));
+      setExperience((this.experience + experience)
+        % ((getLevel() - 1) * 150));
       switch (skillset.getSkillsetName()) {
         case "Warrior":
           strength += 3;
@@ -65,13 +97,22 @@ public class Player extends Actor {
           agility += 3;
           intelligence += 3;
           break;
+        default:
+          assert false;
       }
       System.out.println("Level UP!");
     } else {
+      assert (this.experience + experience < level*150) : "Tidak Naik Level";
       setExperience(this.experience + experience);
     }
   }
 
+  /**
+   * Damage Calculator Player.
+   * @param attackKey Pilihan Aksi Player.
+   * @param defMonster Defense dari Monster.
+   * @return
+   */
   public int attack(char attackKey, int defMonster) {
     int returnValue = -1;
     if (attackKey == 'W' && skillset.getSkills().get(0).isUnlocked()) {
@@ -85,6 +126,8 @@ public class Player extends Actor {
         case "Mage":
           returnValue = intelligence - defMonster;
           break;
+        default:
+          assert false;
       }
     } else if (attackKey == 'E' && skillset.getSkills().get(1).isUnlocked()) {
       switch (skillset.getSkillsetName()) {
@@ -98,6 +141,8 @@ public class Player extends Actor {
         case "Mage":
           returnValue = intelligence;
           break;
+        default:
+          assert false;
       }
     } else if (attackKey == 'R' && skillset.getSkills().get(2).isUnlocked()) {
       switch (skillset.getSkillsetName()) {
@@ -112,6 +157,8 @@ public class Player extends Actor {
         case "Mage":
           returnValue = (2 * intelligence) - defMonster;
           break;
+        default:
+          assert false;
       }
     } else {
       returnValue = agility - defMonster;

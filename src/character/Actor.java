@@ -1,4 +1,4 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 18/04/17.
@@ -198,6 +198,8 @@ public abstract class Actor implements Movement {
       case "right":
         actorColumn = actorColumn + 1;
         break;
+      default:
+        assert false;
     }
   }
 }

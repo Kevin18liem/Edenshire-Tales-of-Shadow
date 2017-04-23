@@ -1,4 +1,4 @@
-package Character;
+package character;
 
 import java.util.Random;
 import Infrastructure.Map;
@@ -55,6 +55,7 @@ public abstract class Monster extends Actor implements Movement{
     int i,j;
     solved = track(currentMap, posXPlayer, posYPlayer,
       actorRow, actorColumn);
+    assert solved;
 //    for (i = 0; i < currentMap.getRow(); i++) {
 //      for (j = 0; j < currentMap.getColumn(); j++) {
 //        System.out.print(currentPath[i][j] + " ");
@@ -74,17 +75,6 @@ public abstract class Monster extends Actor implements Movement{
    * @return boolean apakah gerakan valid atau tidak.
    */
   public boolean isValid(Map currentMap, int posXMonster, int posYMonster) {
-//    if (isInRange(currentMap,posXMonster,posYMonster)) {
-//      System.out.println("inRange Bener");
-//      if (isAvailable(currentMap,posXMonster,posYMonster)) {
-//        System.out.println("isAvailable Bener");
-//        if (!isPassed(posXMonster,posYMonster)) {
-//          System.out.println("isPassed Bener");
-//          return true;
-//        }
-//      }
-//    }
-//    return false;
     if (isInRange(currentMap,posXMonster,posYMonster)
      && isAvailable(currentMap, posXMonster, posYMonster)
      && !isPassed(posXMonster,posYMonster)) {
@@ -172,6 +162,7 @@ public abstract class Monster extends Actor implements Movement{
     if (!isValid(currentMap, posXMonster, posYMonster)) {
       return false;
     }
+    assert (isValid(currentMap, posXMonster, posYMonster)) : "Gerakan Tidak Valid";
     if (isDestination(posXPlayer,posYPlayer,posXMonster,posYMonster)) {
       currentPath[posXMonster][posYMonster] = 3;
       return true;
@@ -193,7 +184,6 @@ public abstract class Monster extends Actor implements Movement{
     } else if (track(currentMap,posXPlayer,posYPlayer,
       posXMonster,posYMonster-1)) {
       currentPath[posXMonster][posYMonster-1] = 3;
-
       return true;
     }
     return false;

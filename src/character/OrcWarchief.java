@@ -1,43 +1,44 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class Wolf extends Monster{
+public class OrcWarchief extends Monster {
   protected String attackName;
   protected String specialAttackName;
 
   /**
-   * Constructor Wolf.
+   * Constructor Orc Warchief.
    * @param monsterMapId Kode Map dari Monster.
    * @param monsterX Posisi Ordinat dari Monster.
    * @param monsterY Posisi Absis dari Monster.
    */
-  public Wolf(int monsterMapId, int monsterX, int monsterY) {
-    super("Wolf", monsterMapId, monsterX, monsterY, 15, 2, 3, 10, 2, 40, 'A');
-    attackName = "Bite";
-    specialAttackName = "Swift Strike";
+  public OrcWarchief(int monsterMapId, int monsterX, int monsterY) {
+    super("Orc Warchief", monsterMapId, monsterX, monsterY, 100, 20, 10, 10, 5, 100, 'M');
+    attackName = "Tackle";
+    specialAttackName = "Blood Lust";
   }
 
   /**
-   * Normal Attack Calculator Wolf.
+   * Normal Attack Calculator Orc Warchief.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Normal Attack Wolf.
+   * @return nilai Damage Normal Attack Orc Warchief.
    */
   public int attack(int defPlayer) {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
+    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
     return 1;
   }
 
   /**
-   * Special Attack Calculator Wolf.
+   * Special Attack Calculator Orc Warchief.
    * @param defPlayer Defense dari Player.
-   * @return nilai Special Attack Wolf.
+   * @return nilai Damage Special Attack Orc Warchief.
    */
   public int specialAttack(int defPlayer) {
-    return attack(defPlayer);
+    return (getAgility());
   }
 
   /**
@@ -49,7 +50,7 @@ public class Wolf extends Monster{
   }
 
   /**
-   * Getter dari Special Attack.
+   * Getter Nama Special Attack
    * @return nama Special Attack.
    */
   public String getSpecialAttackName() {

@@ -1,43 +1,44 @@
-package Character;
+package character;
 
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class GolemKnight extends Monster{
+public class Dragon extends Monster {
   protected String attackName;
   protected String specialAttackName;
 
   /**
-   * Constructor Golem Knight.
+   * Constructor Dragon.
    * @param monsterMapId Kode Map dari Monster.
-   * @param monsterX Posisi Ordinat dari Player.
-   * @param monsterY Posisi Absis dari Player.
+   * @param monsterX Posisi Ordinat dari Monster.
+   * @param monsterY Posisi Absis dari Monster.
    */
-  public GolemKnight(int monsterMapId, int monsterX, int monsterY) {
-    super("Golem Knight", monsterMapId, monsterX, monsterY, 1500, 300, 100,  75, 50, 5000, 'B');
-    attackName = "Kor'kron Annihilator";
-    specialAttackName = "Echo Slam";
+  public Dragon(int monsterMapId, int monsterX, int monsterY) {
+    super("Nefarian", monsterMapId, monsterX, monsterY, 250, 50, 30, 35, 40, 1000, 'M');
+    attackName = "Cleave";
+    specialAttackName = "Shsdowflame Breath";
   }
 
   /**
-   * Normal Atack Calculator Golem Knight.
+   * Normal Attack Calculator Dragon.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Normal Attack Golem Knight.
+   * @return nilai Damage Normal Attack Dragon.
    */
   public int attack(int defPlayer) {
     if (getAgility() > defPlayer) {
-      return 2*(getAgility() - defPlayer);
+      return (getAgility() - defPlayer);
     }
+    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
     return 1;
   }
 
   /**
-   * Special Attack Calculator Golem Knight.
+   * Special Attack Calculator Dragon.
    * @param defPlayer Defense dari Player.
-   * @return nilai Damage Special Attack Golem Knight.
+   * @return nilai Damage Special Attack Dragon.
    */
   public int specialAttack(int defPlayer) {
-    return 4*getAgility();
+    return getIntelligence();
   }
 
   /**
