@@ -29,6 +29,14 @@ public class People extends Actor implements Movement{
   }
 
   /**
+   * Getter dialog People.
+   * @return Kumpulan String dialog People.
+   */
+  public Vector<String> getDialogueLines() {
+    return dialogue.get(dialogueId).getDialogues();
+  }
+
+  /**
    * Setter ID Dialog
    * @param dialogueId ID Dialog.
    */

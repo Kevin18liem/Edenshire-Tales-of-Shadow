@@ -64,15 +64,23 @@ public class GameManager {
     return currentMap;
   }
 
+  /**
+   * Constructor Game Manager.
+   * @param playerName Nama dari Player.
+   * @param playerSkillset Skillset pilihan Player.
+   */
   public GameManager(String playerName,String playerSkillset) {
     initiateMap();
     initiatePlayer(playerName,playerSkillset);
     initiateQuest();
     inititatePeople();
     initiateMonster();
-    moveTo(14,1,2);
+    moveTo(0,1,2);
   }
 
+  /**
+   * Prosedur inisialisasi Map dari file eksternal.
+   */
   public void initiateMap() {
     try {
       maps = new Vector<Map>();
@@ -108,13 +116,18 @@ public class GameManager {
         maps.addElement(new Map(mapName, maps.size(), cells, row, column, gates,questReq,missionReq));
         mapId = readMap.nextInt();
       }
-      currentMapID = 14;
+      currentMapID = 0;
       currentMap = new Map(maps.get(currentMapID));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+  /**
+   * Prosedur inisialisasi Player dari file eksternal.
+   * @param playerName Nama dari Player.
+   * @param playerSkillset Skillset pilihan Player.
+   */
   public void initiatePlayer(String playerName,String playerSkillset) {
     try {
       int effectValue, playerRow, playerColumn;
@@ -144,6 +157,9 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur inisialisasi Quest dari file eksternal.
+   */
   public void initiateQuest() {
     try {
       int questId,missionTarget,unlockedSkill;
@@ -187,6 +203,9 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur inisialisasi People dari file eksternal.
+   */
   public void inititatePeople() {
     try {
       peoples = new Vector<People>();
@@ -226,6 +245,13 @@ public class GameManager {
     }
   }
 
+  /**
+   * Fungsi untuk mencari tahu apakah sebuah Cell sudah terisi atau belum.
+   * @param mapId ID dari map yang ingin dicek.
+   * @param row Baris dari Cell yang ingin dicek.
+   * @param column Kolom dari Cell yang ingin dicek.
+   * @return Iya/tidaknya sebuah Cell sudah terisi.
+   */
   public boolean cellOccupied(int mapId,int row,int column) {
     if (mapId == currentMapID && player.getActorRow() == row && player.getActorColumn() == column) {
       return false;
@@ -249,6 +275,9 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur inisialisasi Monster dari file eksternal.
+   */
   public void initiateMonster() {
     try {
       int monsterId,mapId,row,column,health,strength,defense,agility,intelligence,exp;
@@ -282,7 +311,7 @@ public class GameManager {
             monsters.addElement(new Wolf(mapId, row, column));
             break;
         }
-        System.out.println("added "+monsterName+" to "+mapId+" "+row+","+column);
+        //System.out.println("added "+monsterName+" to "+mapId+" "+row+","+column);
         monsterId = readMonster.nextInt();
       }
     } catch (IOException e) {
@@ -290,6 +319,9 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur untuk me-render Game.
+   */
   public void renderGame() {
     Map toRender = new Map(maps.get(currentMapID));
     toRender.setCellType(player.getActorRow(),player.getActorColumn(),'P');
@@ -306,6 +338,10 @@ public class GameManager {
     toRender.renderMap();
   }
 
+  /**
+   * Fungsi untuk mencari tahu apakah battle bisa dilakukan.
+   * @return Indeks monster yang akan diajak battle. Jika tidak ada bernilai -1.
+   */
   public int readyBattle() {
     int i = 0;
     boolean found = false;
@@ -325,6 +361,10 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur untuk melakukan loop input/output antara game dan user.
+   * @param input String yang berisi perintah user.
+   */
   public void runGame(String input) {
     //System.out.print("> ");
     //Scanner in = new Scanner(System.in);
@@ -355,6 +395,9 @@ public class GameManager {
     }
   }
 
+  /**
+   * Prosedur untuk mencetak status Player.
+   */
   public void viewStats() {
     System.out.println("Name        : " + player.getActorName());
     System.out.println("Level       : " + player.getLevel());
@@ -366,6 +409,9 @@ public class GameManager {
     System.out.println("Exp         : " + player.getExperience()+"/"+player.getLevel()*150);
   }
 
+  /**
+   * Prosedur Untuk mencetak Skill Player.
+   */
   public void viewSkills() {
     for(int i = 0; i < player.getSkillset().getSkills().size(); i++) {
       System.out.print(player.getSkillset().getSkills().get(i).getSkillName()+" [");
@@ -378,28 +424,60 @@ public class GameManager {
     }
   }
 
-  public void talkNPC() {
+  /**
+   * Fungsi untuk melakukan dialog dengan People.
+   * @return Vektor string dialog People. Jika tidak ada, Vektor kosong.
+   */
+  public Vector<String> talk() {
     int id = nearbyPeopleId();
+    Vector<String> toReturn = new Vector<String>();
     if (id != -1) {
-      peoples.get(id).talk();
-    } else {
-      System.out.println("No people nearby");
-    }
-    for(Quest quest:quests) {
-      if (quest.isActive() && quest.getCurrentMission().getType().equals("talk")) {
-        if (id == quest.getCurrentMission().getActorId().get(0)) {
-          int i = 0;
-          Vector<Integer> actorIds = quest.getCurrentMission().getActorId();
-          while (i<actorIds.size()) {
-            peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
-            i = i + 2;
+      int i = 0;
+      for(String lines:peoples.get(id).getDialogueLines()) {
+        if (!lines.equals("null")) {
+          if (i%2 == 0) {
+            toReturn.addElement(peoples.get(id).getActorName() + " : " + lines);
+          } else {
+            toReturn.addElement("You : " + lines);
           }
-          int result = quest.progressQuest();
-          if (result != -1) {
-            player.getSkillset().unlockSkill();
+        }
+        i++;
+      }
+      for(Quest quest:quests) {
+        if (quest.isActive() && quest.getCurrentMission().getType().equals("talk")) {
+          if (id == quest.getCurrentMission().getActorId().get(0)) {
+            i = 0;
+            Vector<Integer> actorIds = quest.getCurrentMission().getActorId();
+            while (i<actorIds.size()) {
+              peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
+              i = i + 2;
+            }
+            int result = quest.progressQuest();
+            if (result != -1) {
+              player.getSkillset().unlockSkill();
+            }
           }
         }
       }
+    }
+    return toReturn;
+  }
+
+  /**
+   * Prosedur untuk mencetak dialog dengan People.
+   */
+  public void talkNPC() {
+    Vector<String> dialogues = talk();
+    if (dialogues.size() != 0) {
+      System.out.println(dialogues.size());
+      for (String lines : dialogues) {
+        Scanner input = new Scanner(System.in);
+        System.out.print(lines);
+        String enter = input.nextLine();
+      }
+      System.out.println();
+    } else {
+      System.out.println("No one here");
     }
   }
 

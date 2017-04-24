@@ -1,37 +1,7 @@
 0 Wolf
-9 5 7
+1 5 5
 
-1 Wolf
-9 3 6
-
-2 Wolf
-9 3 3
-
-3 Goblin
-2 1 1
-
-4 Goblin
-2 2 8
-
-5 OrcWarchief
-4 1 4
-
-6 Necromancer
-6 2 3
-
-7 Dragon
-8 2 5
-
-8 Wolf
-11 3 1
-
-9 Wolf
-11 8 9
-
-10 Wolf
-11 12 5
-
-11 GolemKnight
-12 2 6
+1 Goblin
+1 5 7
 
 -1
