@@ -1,37 +1,107 @@
-0 NPC1
 0
-Ngomong ama NPC2 sana
-Dimane?
-Disitu
-Anjing lu
+Nefarian
+14
+How absurd! For a mere mortal to slay me!?
+Ahahah, this mere mortal is apparently a hero!
+A Hero?? Nooooo! Such power!
+Alright, now I'm off to get your treasure!
 .
-Nah karang ngomong ama gue
-cot jing
-.
-Udah pergi sana
+Curse you- I'm dying ..
 null
 .
 #
 
-1 NPC2
 1
-Cie jalanan quest dummy ya?
-Anjing bacot lu
+Carriage Driver
+15
+Hey,hey, wake up!
+TREASU- uhh- ..what?
+You've been asleep for 3 hours now, we are arriving.
+Arriving? Oh yeah, that was all a dream.
+Anyway, here you go. Welcome to Eedenshire.
+null
 .
-Udah bang ngapain ngomong ama gue lagi
+Enjoy your visit!
 null
 .
 #
 
-2 NPC3
 2
-Pagi bang
-Ini malem bangsat!
+Hans
+0
+Hello there newcomer, new here?
+Yes, i just arrived.
+Why don't you meet our Chief first? It's a tradition for newcomer.
+I'd love to.
 .
-Makasi bang udah dibunuh si anjing
-Mana duitnye
-Anjing hero tajir
-Diem lu
+Met the Chief yet?
+null
+.
+#
+
+3
+Village Chief
+0
+Hello there, villager.
+null
+.
+Hm? Ah now that i see it, you're not one of us.
+Yes, I just arrived.
+I'd like to ask something from you. This is related to our villagers looking unfriendly to newcomers like you.
+Oh, a quest? What might it be?
+Please, you must clear the Cave to the north of this place. There are lots of monster there.
+Hm, that sounds not too hard. Okay.
+.
+Have you cleared the Cave yet?
+null
+.
+Have you cleared the Cave yet?
+I can't even enter it.
+Ah, looks like the Wizard's barrier still active. Sorry about that.
+Barrier?
+Yes, just ask him to set it off for a bit so you can enter.
+null
+.
+Go ask the Wizard, will you?
+null
+.
+#
+
+4
+Cave Guard
+1
+What are you doing here?
+I was told to clear the Cave by the Chief.
+Ah the Chief, asking around newcomers again. Return back, no one are able to enter the Cave ever.
+null
+.
+I told you to go back.
+null
+.
+#
+
+5
+Wizard
+0
+Hm- what? Oh sorry, i was lost in thought.
+null
+.
+And this and then .. Oh sorry, didn't see you there.
+Hey, can you turn the barrier off for a bit?
+What?! Are you crazy?
+Is that a problem?
+Well, the Cave is pretty much harmless, but it will attract wolves from the Eastern Forest!
+So if I kill some of the wolves you can turn the barrier off?
+You can try though- Be careful! There are at least 3 wolves there!
+No problem.
+.
+I can't believe you really killed those beast.
+Well, it's not as easy as i thought.
+There, I put off the barrier. Good luck!
+null
+.
+Good luck!
+null
 .
 #
 

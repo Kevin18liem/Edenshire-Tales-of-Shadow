@@ -1,4 +1,4 @@
-package Character;
+package character;
 
 /**
  * Created by edwin on 18/04/17.

@@ -1,25 +1,69 @@
-0 Main Quest
-Dummy Mission
+0
+Main Quest
+Dragon Slayer
 talk
-Talk to NPC 2 at NorthMap
+Talk to Nefarian
 null
-1 1 0 1
+0 1
 1
 .
-Dummy Mission 2
+Arrival
 talk
-Talk to NPC 1 at InitialMap
+Go to the next Map
 null
-0 2
+1 1
 1
 .
-Dummy Mission 3
+Asking Around
+talk
+Talk to the villagers to find information about the village
+null
+2 1 3 1
+1
+.
+Tradition
+talk
+Meet the Village Chief
+null
+3 2
+1
+.
+The Cave
+talk
+Enter the Cave
+null
+4 1 3 3
+1
+.
+The Cave
+talk
+Ask the Chief about the inaccessible Cave
+null
+3 4 5 1
+1
+.
+Barrier
+talk
+Ask the Wizard to turn the barrier off
+null
+5 0
+1
+.
+Going Hunting
 kill
-Kill 2 wolf at EastMap
+Kill the wolves at the Eastern Forest
 Wolf
-2 1
-2
+5 2
+3
+.
+Barrier
+talk
+Report back to the Wizard
+null
+5 3
+1
 .
 #
+
 
 -1

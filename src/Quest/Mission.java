@@ -100,11 +100,10 @@ public class Mission {
   }
 
   /**
-   * Setter Done.
-   * @param done nilai boolean yang akan dimasukkan.
+   * Ubah status menjadi Done.
    */
-  public void setDone(boolean done) {
-    isDone = done;
+  public void setDone() {
+    isDone = true;
   }
 
   /**

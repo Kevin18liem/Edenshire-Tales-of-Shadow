@@ -51,10 +51,19 @@ public class Quest {
 
   /**
    * Getter Mission dari Quest.
-   * @return Kumpulan Mission dari Quest.
+   * @return Mission yang sedang berlangsung.
    */
   public Mission getCurrentMission() {
     return missions.get(currentMission);
+  }
+
+  /**
+   * Getter spesifik Mission dari Quest.
+   * @param missionId Indeks Mission.
+   * @return Mission spesifik dari Quest.
+   */
+  public Mission getMission(int missionId) {
+    return missions.get(missionId);
   }
 
   /**
@@ -70,6 +79,7 @@ public class Quest {
   public void progressQuest() {
     missions.get(currentMission).addCount();
     if (missions.get(currentMission).getTarget() == missions.get(currentMission).getCount()) {
+      missions.get(currentMission).setDone();
       if (currentMission + 1 == missions.size()) {
         isActive = false;
         isComplete = true;

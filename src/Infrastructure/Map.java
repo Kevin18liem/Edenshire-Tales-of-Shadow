@@ -12,6 +12,8 @@ public class Map {
   private int column;
   private Cell[][] cells;
   private Vector<Gate> gates;
+  private int questReq;
+  private int missionReq;
 
   /**
    * Constructor Map.
@@ -21,8 +23,10 @@ public class Map {
    * @param row Ukuran Ordinat.
    * @param column Ukuran Absis.
    * @param gates Kumpulan Gerbang Perpindahan.
+   * @param questReq Quest yang harus dijalani sebagai syarat akses Map
+   * @param missionReq Misi bagian quest yang harus dijalani sebagai syarat akses Map
    */
-  public Map(String mapName, int mapID, Cell[][] cells,int row,int column,Vector<Gate> gates) {
+  public Map(String mapName, int mapID, Cell[][] cells,int row,int column,Vector<Gate> gates,int questReq,int missionReq) {
     this.mapName = mapName;
     this.mapID = mapID;
     this.row = row;
@@ -36,6 +40,8 @@ public class Map {
       }
     }
     this.gates = gates;
+    this.questReq = questReq;
+    this.missionReq = missionReq;
   }
 
   /**
@@ -113,6 +119,22 @@ public class Map {
    */
   public Vector<Gate> getGates() {
     return gates;
+  }
+
+  /**
+   * Getter dari Quest Syarat Akses Map.
+   * @return Indeks Quest.
+   */
+  public int getQuestReq() {
+    return questReq;
+  }
+
+  /**
+   * Getter dari Mission Syarat Akses Map.
+   * @return Indeks Mission.
+   */
+  public int getMissionReq() {
+    return missionReq;
   }
 
   /**

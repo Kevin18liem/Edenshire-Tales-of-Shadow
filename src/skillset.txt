@@ -4,7 +4,7 @@ Fully use your strength to attack the opponent
 Leeroy Jenkins
 Charge through your opponent - costs your health
 Berserker's Blood
-Use lost health to gain Nevarian's power
+Use lost health to gain Nefarian's power
 #
 Rogue
 Backstab
@@ -12,7 +12,7 @@ Stealthily stab the oppponent while off-guard
 Eviscerate
 Slash the opponent through their armor
 Tricks of The Trade
-By slaying Nevarian, you gain her lucks
+By slaying Nefarian, you gain her lucks
 #
 Mage
 Lightning bolt
@@ -20,5 +20,5 @@ Electrocute the opponent
 Frost Nova
 Chills the enemy down to their bone
 Pyroblast
-Burn everything opposing you with Nevarian's fire
+Burn everything opposing you with Nefarian's fire
 #
