@@ -306,6 +306,25 @@ public class GameManager {
     toRender.renderMap();
   }
 
+  public int readyBattle() {
+    int i = 0;
+    boolean found = false;
+    while (!found && i < monsters.size()) {
+      Monster monster = monsters.get(i);
+      if (monster.getMapID() == currentMapID && monster.getActorRow() == player.getActorRow() &&
+          monster.getActorColumn() == player.getActorColumn()) {
+        found = true;
+      } else {
+        i++;
+      }
+    }
+    if (found) {
+      return i;
+    } else {
+      return -1;
+    }
+  }
+
   public void runGame(String input) {
     //System.out.print("> ");
     //Scanner in = new Scanner(System.in);
@@ -316,17 +335,16 @@ public class GameManager {
     } else if (input.equals("skill")) {
       viewSkills();
     } else if (input.equals("talk")) {
-      talk();
+      talkNPC();
     } else if (input.equals("quest")) {
       viewQuest();
     } else if (input.equals("moveNPC")) {
       moveNPC();
     } else if (isMovementInput(input)) {
       handleMovement(input);
-      if (currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'A' ||
-        currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'B' ||
-        currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'M') {
-        battleMode(monsters.get(getMonsterId(player.getActorRow(),player.getActorColumn())));
+      int monsterId = readyBattle();
+      if (monsterId != -1) {
+        battleMode(monsters.get(monsterId));
       }
       renderGame();
     } else {
@@ -360,7 +378,7 @@ public class GameManager {
     }
   }
 
-  public void talk() {
+  public void talkNPC() {
     int id = nearbyPeopleId();
     if (id != -1) {
       peoples.get(id).talk();
