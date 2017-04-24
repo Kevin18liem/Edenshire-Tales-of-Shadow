@@ -65,6 +65,19 @@ null
 Go ask the Wizard, will you?
 null
 .
+Have you cleared the Cave yet?
+That was crazy, I killed a Dragon!
+Wha- Dragon? Oh god ..
+What's wrong? Anyway, is there anything you know about a "transparent person"?
+That's what I'm worried about. Please, visit the Graveyard and see what you can do there.
+Okay ...?
+.
+Please hurry.
+null
+.
+Please do whatever that person asked you to.
+null
+.
 #
 
 4
@@ -102,6 +115,62 @@ null
 .
 Good luck!
 null
+.
+#
+
+6
+Shadow NPC 1
+3
+You there ...
+Wha- Who are you? You're looking .. transparent?
+Leave ...
+null
+.
+Leave ...
+null
+.
+#
+
+7
+Shadow NPC 2
+5
+Cease your resistance ...
+Not again.
+.
+Leave ...
+null
+.
+#
+
+8
+Shadow NPC 3
+7
+Go Back ...
+...
+.
+Leave ...
+null
+.
+#
+
+9
+Shadow NPC 4
+10
+Go .. defeat .. the .. Golem ..
+Golem?
+North ... The Mountain ... Shrine
+null
+.
+Leave ...
+null
+.
+#
+
+10
+Divines
+13
+Hello my child.
+Bloody hell.
 .
 #
 

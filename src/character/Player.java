@@ -24,11 +24,11 @@ public class Player extends Actor {
                 int posY,
                 Skillset skillset) {
     super(playerName,mapID,posX,posY);
-    strength = 8;
+    strength = 100;
     health = strength * 5;
-    defense = 5;
-    agility  = 8;
-    intelligence = 8;
+    defense = 100;
+    agility  = 100;
+    intelligence = 100;
     experience = 0;
     level = 1;
     this.skillset = skillset;

@@ -76,10 +76,12 @@ public class Quest {
   /**
    * Prosedur Penanda Perkembangan Quest.
    */
-  public void progressQuest() {
+  public int progressQuest() {
+    int skill = -1;
     missions.get(currentMission).addCount();
     if (missions.get(currentMission).getTarget() == missions.get(currentMission).getCount()) {
       missions.get(currentMission).setDone();
+      skill = missions.get(currentMission).getUnlockedSkill();
       if (currentMission + 1 == missions.size()) {
         isActive = false;
         isComplete = true;
@@ -87,5 +89,6 @@ public class Quest {
         currentMission = currentMission + 1;
       }
     }
+    return skill;
   }
 }

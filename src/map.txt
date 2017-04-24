@@ -1,7 +1,7 @@
 0
 Town
 8 10
--1 -1
+0 1
 xxxxxwxxxx
 xrrrrrrrrx
 xrxxrrrrrx
@@ -55,7 +55,7 @@ xxxxsxxxxx
 3
 Hall 1
 8 5
--1 -1
+0 9
 xxwxx
 xrrrx
 xrrrx
@@ -72,7 +72,7 @@ xxsxx
 4
 Cave 2
 5 10
--1 -1
+0 10
 xxxxwxxxxx
 xrrrrxrrrx
 xrxxrrrrrx
@@ -86,7 +86,7 @@ xxxxsxxxxx
 5
 Hall 2
 8 5
--1 -1
+0 11
 xxwxx
 xrrrx
 xrrrx
@@ -103,10 +103,10 @@ xxsxx
 6
 Cave 3
 5 10
--1 -1
+0 12
 xxxxxxxxxx
 xrrrrrrxrd
-xrxxxxrxrx
+xrxrrrrxrx
 xrrrrxrrrx
 xxxxsxxxxx
 5 7 2
@@ -117,7 +117,7 @@ xxxxsxxxxx
 7
 Hall 3
 5 8
--1 -1
+0 13
 xxxxxxxx
 xrrrrrrx
 arrrrrrd
@@ -131,7 +131,7 @@ xxxxxxxx
 8
 Dragon Boss
 5 10
--1 -1
+0 14
 xxxxxxxxxx
 xrrrrrrrrx
 arrrrrrrrx
@@ -162,7 +162,7 @@ xxxxxxxxxx
 10
 Graveyard
 5 8
--1 -1
+0 16
 xxxxxxxx
 xrxrxrrx
 xrrxrxrx
@@ -176,7 +176,7 @@ xxxsxxxx
 11
 Mountain
 14 12
--1 -1
+0 17
 xxxxxwxxxxxx
 xrrxrrrrrrrx
 xrrrrrrrxrrx
@@ -213,7 +213,7 @@ xsxxxxxxxxxx
 13
 Mountain Shrine
 5 12
--1 -1
+0 18
 xxxxxxxxxxxx
 xrrrrrrrrrrx
 xrrrrrrrrrrx
@@ -239,19 +239,19 @@ xxx
 15
 Carriage
 3 3
--1 -1
+0 0
 xxx
 xrd
 xxx
 -1
 -1
 -1
-0 6 5
+0 0 5
 
 16
 Treasure
 3 3
--1 -1
+0 15
 xxx
 xrx
 xsx

@@ -18,10 +18,12 @@ public class Main {
     String playerSkillset = input.nextLine();
     System.out.println("Skillset chosen: "+playerSkillset);*/
     GameManager Eedenshire = new GameManager("Edwin","Warrior");
+    System.out.print("> ");
     Scanner input = new Scanner(System.in);
     String in = input.nextLine();
     while(!in.equals("quit")) {
       Eedenshire.runGame(in);
+      System.out.print("> ");
       in = input.nextLine();
     }
   }

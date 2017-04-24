@@ -14,6 +14,7 @@ public class Mission {
   private boolean isDone;
   private int count;
   private int target;
+  private int unlockedSkill;
 
   /**
    * Constructor Mission.
@@ -23,8 +24,9 @@ public class Mission {
    * @param actorId ID monster yang harus dikalahkan.
    * @param target NPC yang akan terpengaruh oleh quest.
    * @param actorName Nama Monster yang harus dikalahkan.
+   * @param unlockedSkill Skill yang terunlock setelah Mission selesai.
    */
-  public Mission(String missionName,String type,String instruction,Vector<Integer> actorId,int target,String actorName) {
+  public Mission(String missionName,String type,String instruction,Vector<Integer> actorId,int target,String actorName,int unlockedSkill) {
     this.missionName = missionName;
     this.type = type;
     this.instruction = instruction;
@@ -33,6 +35,7 @@ public class Mission {
     isDone = false;
     this.target = target;
     count = 0;
+    this.unlockedSkill = unlockedSkill;
   }
 
   /**
@@ -97,6 +100,14 @@ public class Mission {
    */
   public boolean isDone() {
     return isDone;
+  }
+
+  /**
+   * Getter unlockedSkill.
+   * @return indeks skill yaang terunlock jika Mission selesai.
+   */
+  public int getUnlockedSkill() {
+    return unlockedSkill;
   }
 
   /**

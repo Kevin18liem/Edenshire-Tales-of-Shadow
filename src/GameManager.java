@@ -70,7 +70,7 @@ public class GameManager {
     initiateQuest();
     inititatePeople();
     initiateMonster();
-    //talk();
+    moveTo(14,1,2);
   }
 
   public void initiateMap() {
@@ -146,7 +146,7 @@ public class GameManager {
 
   public void initiateQuest() {
     try {
-      int questId,missionTarget;
+      int questId,missionTarget,unlockedSkill;
       String questName, buffer, missionName, missionType, missionIns, missionMonster;
       quests = new Vector<Quest>();
       Vector<Mission> missions;
@@ -162,6 +162,8 @@ public class GameManager {
           while (!buffer.equals(".")) {
             actorIds = new Vector<Integer>();
             missionName = buffer;
+            unlockedSkill = readQuest.nextInt();
+            buffer = readQuest.nextLine();
             missionType = readQuest.nextLine();
             missionIns = readQuest.nextLine();
             missionMonster = readQuest.nextLine();
@@ -170,7 +172,7 @@ public class GameManager {
             }
             missionTarget = actorIds.get(actorIds.size() - 1);
             actorIds.removeElementAt(actorIds.size() - 1);
-            missions.addElement(new Mission(missionName, missionType, missionIns, actorIds,missionTarget,missionMonster));
+            missions.addElement(new Mission(missionName, missionType, missionIns, actorIds,missionTarget,missionMonster,unlockedSkill));
             buffer = readQuest.nextLine();
             buffer = readQuest.nextLine();
           }
@@ -267,19 +269,20 @@ public class GameManager {
           case "Goblin":
             monsters.addElement(new Goblin(mapId, row, column));
             break;
-          case "Golem Knight":
+          case "GolemKnight":
             monsters.addElement(new GolemKnight(mapId, row, column));
             break;
           case "Necromancer":
             monsters.addElement(new Necromancer(mapId, row, column));
             break;
-          case "Orc Warchief":
+          case "OrcWarchief":
             monsters.addElement(new OrcWarchief(mapId, row, column));
             break;
           case "Wolf":
             monsters.addElement(new Wolf(mapId, row, column));
             break;
         }
+        System.out.println("added "+monsterName+" to "+mapId+" "+row+","+column);
         monsterId = readMonster.nextInt();
       }
     } catch (IOException e) {
@@ -316,13 +319,16 @@ public class GameManager {
       talk();
     } else if (input.equals("quest")) {
       viewQuest();
+    } else if (input.equals("moveNPC")) {
+      moveNPC();
     } else if (isMovementInput(input)) {
       handleMovement(input);
       if (currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'A' ||
+        currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'B' ||
         currentMap.getCell(player.getActorRow(),player.getActorColumn()).getType() == 'M') {
         battleMode(monsters.get(getMonsterId(player.getActorRow(),player.getActorColumn())));
       }
-      //renderGame();
+      renderGame();
     } else {
       renderGame();
       //}
@@ -370,7 +376,10 @@ public class GameManager {
             peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
             i = i + 2;
           }
-          quest.progressQuest();
+          int result = quest.progressQuest();
+          if (result != -1) {
+            player.getSkillset().unlockSkill();
+          }
         }
       }
     }
@@ -419,6 +428,29 @@ public class GameManager {
     }
   }
 
+  public void moveNPC() {
+    for (People toMove:peoples) {
+      if (toMove.getMapID() == currentMapID) {
+        toMove.move(currentMap);
+      }
+    }
+    for (Monster toMove:monsters) {
+      if (toMove.getMapID() == currentMapID && toMove.getHealth() > 0) {
+        switch (toMove.getType()) {
+          case 'A':
+            toMove.moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
+            break;
+          case 'M':
+            toMove.moveRandom(currentMap);
+            break;
+          case 'B':
+            toMove.moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
+            break;
+        }
+      }
+    }
+  }
+
   public boolean isMovementInput(String input) {
     return (input.equals("w") || input.equals("s") || input.equals("a") || input.equals("d"));
   }
@@ -459,22 +491,6 @@ public class GameManager {
       currentMap.setCellType(player.getActorRow(),player.getActorColumn(),'r');
       moveNormally(input);
     }
-    for (People toMove:peoples) {
-      if (toMove.getMapID() == currentMapID) {
-        toMove.move(currentMap);
-      }
-    }
-    for (Monster toMove:monsters) {
-      if (toMove.getMapID() == currentMapID && toMove.getHealth() > 0) {
-        switch (toMove.getType()) {
-          case 'A':
-            toMove.moveDjikstra(player.getActorRow(),player.getActorColumn(),currentMap);
-            break;
-          case 'M':
-            toMove.moveRandom(currentMap);
-        }
-      }
-    }
   }
 
   public void moveTo(int mapID,int row,int column) {
@@ -490,9 +506,16 @@ public class GameManager {
         initiateMonster();
       }
       System.out.println(maps.get(currentMapID).getMapName());
-      /*if (currentMapID == 15) {
-        talk();
-      }*/
+      for (People people:peoples) {
+        if (people.getMapID() == currentMapID) {
+          currentMap.setCellType(people.getActorRow(),people.getActorColumn(),'!');
+        }
+      }
+      for (Monster monster:monsters) {
+        if (monster.getMapID() == currentMapID && monster.getHealth() > 0) {
+          currentMap.setCellType(monster.getActorRow(),monster.getActorColumn(),monster.getType());
+        }
+      }
     }
   }
 
@@ -602,7 +625,10 @@ public class GameManager {
               peoples.get(actorIds.get(i)).setDialogueId(actorIds.get(i + 1));
               i = i + 2;
             }
-            quest.progressQuest();
+            int result = quest.progressQuest();
+            if (result != -1) {
+              player.getSkillset().unlockSkill();
+            }
             System.out.println(quest.getCurrentMission().getCount());
           }
         }
