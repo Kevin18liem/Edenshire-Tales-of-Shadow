@@ -1,18 +1,20 @@
 package character;
 
+import infrastructure.Map;
 import java.util.Random;
-import Infrastructure.Map;
+
 /**
  * Created by ClementAndreas on 4/22/2017.
  */
-public abstract class Monster extends Actor implements Movement{
+public abstract class Monster extends Actor implements Movement {
 
   private char type;
   private int [][] currentPath;
+
   /**
    * Contructor Monster.
    * @param monsterName Nama Monster.
-   * @param monsterMapID Kode Map Monster.
+   * @param monsterMapId Kode Map Monster.
    * @param monsterX Ordinat Monster.
    * @param monsterY Absis Monster.
    * @param monsterHealth Health Point (HP) Monster.
@@ -23,7 +25,7 @@ public abstract class Monster extends Actor implements Movement{
    * @param monsterExperience Experience (EXP) Monster.
    */
   public Monster(String monsterName,
-                 int monsterMapID,
+                 int monsterMapId,
                  int monsterX,
                  int monsterY,
                  int monsterHealth,
@@ -33,7 +35,7 @@ public abstract class Monster extends Actor implements Movement{
                  int monsterIntelligence,
                  int monsterExperience,
                  char monsterType) {
-    super(monsterName, monsterMapID, monsterX, monsterY);
+    super(monsterName, monsterMapId, monsterX, monsterY);
     health = monsterHealth;
     strength = monsterStrength;
     defense = monsterDefense;
@@ -52,19 +54,9 @@ public abstract class Monster extends Actor implements Movement{
   public void pursue(Map currentMap, int posXPlayer, int posYPlayer) {
     currentPath = new int[currentMap.getRow()][currentMap.getColumn()];
     boolean solved;
-    int i,j;
     solved = track(currentMap, posXPlayer, posYPlayer,
       actorRow, actorColumn);
     assert solved;
-//    for (i = 0; i < currentMap.getRow(); i++) {
-//      for (j = 0; j < currentMap.getColumn(); j++) {
-//        System.out.print(currentPath[i][j] + " ");
-//        if (j == currentMap.getColumn()-1) {
-//          System.out.println("\n");
-//        }
-//      }
-//    }
-//    System.out.print(currentPath.length + " " + currentPath[0].length);
   }
 
   /**
@@ -76,11 +68,11 @@ public abstract class Monster extends Actor implements Movement{
    */
   public boolean isValid(Map currentMap, int posXMonster, int posYMonster) {
     if (isInRange(currentMap,posXMonster,posYMonster)
-     && isAvailable(currentMap, posXMonster, posYMonster)
-     && !isPassed(posXMonster,posYMonster)) {
-     return true;
-   }
-   return false;
+        && isAvailable(currentMap, posXMonster, posYMonster)
+        && !isPassed(posXMonster,posYMonster)) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -91,16 +83,16 @@ public abstract class Monster extends Actor implements Movement{
    * @return boolean apakah gerakan dapat dilakukan atau tidak.
    */
   public boolean isAvailable(Map currentMap, int posXMonster, int posYMonster) {
-    return currentMap.getCell(posXMonster,posYMonster).getType() != 'x' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 'w' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 'a' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 's' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 'd' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != 'M' &&
-      currentMap.getCell(posXMonster,posYMonster).getType() != '!' &&
-      currentMap.getColumn() - 1 != posYMonster &&
-      currentMap.getRow() - 1 != posXMonster &&
-      posYMonster != 0 && posXMonster != 0;
+    return currentMap.getCell(posXMonster,posYMonster).getType() != 'x'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != 'w'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != 'a'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != 's'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != 'd'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != 'M'
+      && currentMap.getCell(posXMonster,posYMonster).getType() != '!'
+      && currentMap.getColumn() - 1 != posYMonster
+      && currentMap.getRow() - 1 != posXMonster
+      && posYMonster != 0 && posXMonster != 0;
   }
 
   /**
@@ -158,7 +150,6 @@ public abstract class Monster extends Actor implements Movement{
                        int posYPlayer,
                        int posXMonster,
                        int posYMonster) {
-//    System.out.println(posXMonster + " " + posYMonster);
     if (!isValid(currentMap, posXMonster, posYMonster)) {
       return false;
     }
@@ -170,20 +161,20 @@ public abstract class Monster extends Actor implements Movement{
       currentPath[posXMonster][posYMonster] = 2;
     }
     if (track(currentMap,posXPlayer,posYPlayer,
-      posXMonster-1,posYMonster)) {
-      currentPath[posXMonster-1][posYMonster] = 3;
+        posXMonster - 1,posYMonster)) {
+      currentPath[posXMonster - 1][posYMonster] = 3;
       return true;
     } else if (track(currentMap,posXPlayer,posYPlayer,
-      posXMonster,posYMonster+1)) {
-      currentPath[posXMonster][posYMonster+1] = 3;
+        posXMonster, posYMonster + 1)) {
+      currentPath[posXMonster][posYMonster + 1] = 3;
       return true;
     } else if (track(currentMap,posXPlayer,posYPlayer,
-      posXMonster+1, posYMonster)) {
-      currentPath[posXMonster+1][posYMonster] = 3;
+        posXMonster + 1, posYMonster)) {
+      currentPath[posXMonster + 1][posYMonster] = 3;
       return true;
     } else if (track(currentMap,posXPlayer,posYPlayer,
-      posXMonster,posYMonster-1)) {
-      currentPath[posXMonster][posYMonster-1] = 3;
+        posXMonster,posYMonster - 1)) {
+      currentPath[posXMonster][posYMonster - 1] = 3;
       return true;
     }
     return false;
@@ -194,7 +185,7 @@ public abstract class Monster extends Actor implements Movement{
    * @param posXPlayer Posisi Ordinat dari Player.
    * @param posYPlayer Posisi Absis dari Player.
    * @param currentMap Peta yang ditempati saat ini.
-   * @return
+   * @return nilai posisi player dibandingkan monster.
    */
   public int checkSurrounding(int posXPlayer, int posYPlayer, Map currentMap) {
     if (actorRow - 1 == posXPlayer && actorColumn == posYPlayer) {
@@ -224,64 +215,43 @@ public abstract class Monster extends Actor implements Movement{
    * @param currentMap Peta yang ditempati saat ini.
    */
   public void moveDjikstra(int posXPlayer, int posYPlayer, Map currentMap) {
-    int i;
-    int j;
-//    boolean djikstra = false;
-//    for (i = 0; i < currentMap.getRow(); i++) {
-//      for (j = 0; j < currentMap.getColumn(); j++) {
-//        if (currentMap.getCell(i,j).getType() == 'P') {
-//          djikstra = true;
-//        }
-//      }
-//    }
-//    if (djikstra) {
     pursue(currentMap, posXPlayer, posYPlayer);
-//    System.out.println("Tes");
-//    for (i = 0; i < currentMap.getRow(); i++) {
-//      for (j = 0; j < currentMap.getColumn(); j++) {
-//        System.out.print(currentPath[i][j] + " ");
-//        if (j == currentMap.getColumn() - 1) {
-//          System.out.print("\n");
-//        }
-//      }
-//    }
-//    System.out.println(actorRow + " " + actorColumn);
     currentMap.setCellType(actorRow, actorColumn, 'r');
     if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 0) {
       int direction;
       Random way = new Random();
       direction = way.nextInt(4);
       if (direction == 0 && currentPath[actorRow - 1][actorColumn] == 3
-        && actorRow - 1 != 0) {
+          && actorRow - 1 != 0) {
         actorRow = actorRow - 1;
       }
       if (direction == 1 && currentPath[actorRow][actorColumn + 1] == 3
-        && actorColumn + 1 != currentMap.getColumn() - 1) {
+          && actorColumn + 1 != currentMap.getColumn() - 1) {
         actorColumn = actorColumn + 1;
       }
       if (direction == 2 && currentPath[actorRow + 1][actorColumn] == 3
-        && actorRow + 1 != currentMap.getRow() - 1) {
+          && actorRow + 1 != currentMap.getRow() - 1) {
         actorRow = actorRow + 1;
       }
       if (direction == 3 && currentPath[actorRow][actorColumn - 1] == 3
-        && actorColumn - 1 != 0) {
+          && actorColumn - 1 != 0) {
         actorColumn = actorColumn - 1;
       }
     } else {
-      if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 1 &&
-         actorRow - 1 != 0) {
+      if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 1
+          && actorRow - 1 != 0) {
         actorRow = actorRow - 1;
       } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 2
-        && actorColumn + 1 != currentMap.getColumn() - 1) {
+          && actorColumn + 1 != currentMap.getColumn() - 1) {
         actorColumn = actorColumn + 1;
       } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 3
-        && actorRow + 1 != currentMap.getRow() - 1) {
+          && actorRow + 1 != currentMap.getRow() - 1) {
         actorRow = actorRow + 1;
       } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 4
-        && actorColumn - 1 != 0) {
+          && actorColumn - 1 != 0) {
         actorColumn = actorColumn - 1;
       } else if (checkSurrounding(posXPlayer, posYPlayer, currentMap) == 5) {
-        if (isAvailable(currentMap,actorRow-1, actorColumn)) {
+        if (isAvailable(currentMap,actorRow - 1, actorColumn)) {
           actorRow = actorRow - 1;
         } else if (isAvailable(currentMap, actorRow, actorColumn - 1)) {
           actorColumn = actorColumn - 1;
@@ -307,7 +277,6 @@ public abstract class Monster extends Actor implements Movement{
       }
     }
     currentMap.setCellType(actorRow, actorColumn, 'A');
-    //System.out.println(actorRow + " " + actorColumn);
   }
 
   /**
@@ -319,33 +288,33 @@ public abstract class Monster extends Actor implements Movement{
     Random way = new Random();
     direction = way.nextInt(4);
     currentMap.setCellType(actorRow, actorColumn, 'r');
-    if (direction == 0 && isInRange(currentMap,actorRow - 1,actorColumn) &&
-        isAvailable(currentMap, actorRow-1, actorColumn)) {
+    if (direction == 0 && isInRange(currentMap,actorRow - 1,actorColumn)
+        && isAvailable(currentMap, actorRow - 1, actorColumn)) {
       actorRow = actorRow - 1;
     }
-    if (direction == 1 && isInRange(currentMap,actorRow,actorColumn + 1) &&
-      isAvailable(currentMap, actorRow, actorColumn + 1)) {
+    if (direction == 1 && isInRange(currentMap,actorRow,actorColumn + 1)
+        && isAvailable(currentMap, actorRow, actorColumn + 1)) {
       actorColumn = actorColumn + 1;
     }
-    if (direction == 2 && isInRange(currentMap,actorRow + 1,actorColumn) &&
-      isAvailable(currentMap, actorRow + 1, actorColumn)) {
+    if (direction == 2 && isInRange(currentMap,actorRow + 1,actorColumn)
+        && isAvailable(currentMap, actorRow + 1, actorColumn)) {
       actorRow = actorRow + 1;
     }
-    if (direction == 3 && isInRange(currentMap,actorRow,actorColumn - 1) &&
-      isAvailable(currentMap, actorRow, actorColumn - 1)) {
+    if (direction == 3 && isInRange(currentMap,actorRow,actorColumn - 1)
+        && isAvailable(currentMap, actorRow, actorColumn - 1)) {
       actorColumn = actorColumn - 1;
     }
     currentMap.setCellType(actorRow, actorColumn, 'M');
     System.out.println(actorRow + " " + actorColumn);
   }
+
   /**
    * Fungsi Pengecek Posisi dengan Tujuan.
    * @param posXPlayer Posisi Ordinat dari Player.
    * @param posYPlayer Posisi Absis dari Player.
    * @param posXMonster Posisi Ordinat dari Monster.
    * @param posYMonster Posisi Absis dari Monster.
-   * @return boolean apakah Monster sudah berada dalam posisi yang
-   * sama dengan player.
+   * @return boolean apakah Monster berada pada posisi yang sama dengan player.
    */
   private boolean isDestination(int posXPlayer,
                                 int posYPlayer,

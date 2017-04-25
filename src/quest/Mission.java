@@ -1,4 +1,4 @@
-package Quest;
+package quest;
 
 import java.util.Vector;
 
@@ -24,9 +24,15 @@ public class Mission {
    * @param actorId ID monster yang harus dikalahkan.
    * @param target NPC yang akan terpengaruh oleh quest.
    * @param actorName Nama Monster yang harus dikalahkan.
-   * @param unlockedSkill Skill yang terunlock setelah Mission selesai.
+   * @param unlockedSkill skill yang terunlock setelah Mission selesai.
    */
-  public Mission(String missionName,String type,String instruction,Vector<Integer> actorId,int target,String actorName,int unlockedSkill) {
+  public Mission(String missionName,
+                 String type,
+                 String instruction,
+                 Vector<Integer> actorId,
+                 int target,
+                 String actorName,
+                 int unlockedSkill) {
     this.missionName = missionName;
     this.type = type;
     this.instruction = instruction;

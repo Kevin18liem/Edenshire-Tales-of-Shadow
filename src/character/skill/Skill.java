@@ -1,4 +1,4 @@
-package character.Skill;
+package character.skill;
 
 /**
  * Created by edwin on 18/04/17.
@@ -6,48 +6,48 @@ package character.Skill;
 public class Skill {
   private String skillName;
   private String skillDesc;
-  private boolean Unlocked;
+  private boolean unlocked;
 
   /**
-   * Constructor Skill.
-   * @param skillName Nama dari Skill.
-   * @param skillDesc Deskripsi dari Skill.
+   * Constructor skill.
+   * @param skillName Nama dari skill.
+   * @param skillDesc Deskripsi dari skill.
    */
   public Skill(String skillName, String skillDesc) {
     this.skillName = skillName;
     this.skillDesc = skillDesc;
-    Unlocked = false;
+    unlocked = false;
 
   }
 
   /**
-   * Getter dari Nama Skill.
-   * @return Nama dari Skill.
+   * Getter dari Nama skill.
+   * @return Nama dari skill.
    */
   public String getSkillName() {
     return skillName;
   }
 
   /**
-   * Getter dari Deskripsi Skill.
-   * @return Deskripsi dari Skill.
+   * Getter dari Deskripsi skill.
+   * @return Deskripsi dari skill.
    */
   public String getSkillDesc() {
     return skillDesc;
   }
 
   /**
-   * Getter dari Unlocked.
+   * Getter dari unlocked.
    * @return nilai boolean apakah skill sudah di unlock atau tidak.
    */
   public boolean isUnlocked() {
-    return Unlocked;
+    return unlocked;
   }
 
   /**
-   * Prosedur Unlock Skill.
+   * Prosedur Unlock skill.
    */
   public void unlock() {
-    Unlocked = true;
+    unlocked = true;
   }
 }

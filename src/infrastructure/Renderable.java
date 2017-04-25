@@ -1,4 +1,4 @@
-package Infrastructure;
+package infrastructure;
 
 /**
  * Created by edwin on 18/04/17.

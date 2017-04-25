@@ -1,7 +1,7 @@
 package character;
 
-import character.Dialogue.Dialogue;
-import Infrastructure.Map;
+import character.dialogue.Dialogue;
+import infrastructure.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
@@ -10,20 +10,20 @@ import java.util.Vector;
  * Created by USER on 4/22/2017.
  */
 
-public class People extends Actor implements Movement{
+public class People extends Actor implements Movement {
   private Vector<Dialogue> dialogue;
   private int dialogueId;
 
   /**
    * Constructor NPC People.
    * @param peopleName Nama dari NPC People.
-   * @param mapID Kode Map dari NPC People.
+   * @param mapId Kode Map dari NPC People.
    * @param posX Posisi Ordinat dari NPC People.
    * @param posY Posisi Absis dari NPC People.
    * @param dialogue Rangkaian Dialog dari NPC People.
    */
-  public People(String peopleName, int mapID, int posX, int posY, Vector<Dialogue> dialogue) {
-    super(peopleName, mapID, posX, posY);
+  public People(String peopleName, int mapId, int posX, int posY, Vector<Dialogue> dialogue) {
+    super(peopleName, mapId, posX, posY);
     this.dialogue = dialogue;
     dialogueId = 0;
   }
@@ -50,8 +50,9 @@ public class People extends Actor implements Movement{
    * @return boolean apakah gerakan valid atau tidak.
    */
   public boolean isValid(char typeCell) {
-    return ! (typeCell == 'x' || typeCell == 'w' || typeCell == 'a' || typeCell == 'd'
-        || typeCell == 's' || typeCell == 'P' || typeCell == 'A'  || typeCell == 'M' || typeCell == '!');
+    return ! (typeCell == 'x' || typeCell == 'w' || typeCell == 'a'
+      || typeCell == 'd' || typeCell == 's' || typeCell == 'P'
+      || typeCell == 'A'  || typeCell == 'M' || typeCell == '!');
   }
 
   /**
@@ -101,10 +102,10 @@ public class People extends Actor implements Movement{
     System.out.println();
     int i = 0;
     Scanner input = new Scanner(System.in);
-    for(String lines:dialogue.get(dialogueId).getDialogues()) {
+    for (String lines:dialogue.get(dialogueId).getDialogues()) {
       if (!lines.equals("null")) {
-        if (i%2 == 0) {
-          System.out.print(actorName+"  : ");
+        if (i % 2 == 0) {
+          System.out.print(actorName + "  : ");
         } else {
           assert i % 2 != 0;
           System.out.print("You   : ");

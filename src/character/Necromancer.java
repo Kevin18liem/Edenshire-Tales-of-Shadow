@@ -28,7 +28,7 @@ public class Necromancer extends Monster {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
-    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
+    assert (getAgility() - defPlayer <= 0) : "Defense Player > Agility Monster";
     return 1;
   }
 

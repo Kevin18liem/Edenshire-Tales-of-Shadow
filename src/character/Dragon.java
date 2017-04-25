@@ -16,7 +16,7 @@ public class Dragon extends Monster {
   public Dragon(int monsterMapId, int monsterX, int monsterY) {
     super("Nefarian", monsterMapId, monsterX, monsterY, 250, 50, 30, 35, 40, 1000, 'M');
     attackName = "Cleave";
-    specialAttackName = "Shsdowflame Breath";
+    specialAttackName = "Shadowflame Breath";
   }
 
   /**
@@ -28,7 +28,7 @@ public class Dragon extends Monster {
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
-    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
+    assert (getAgility() - defPlayer <= 0) : "Defense Player > Agility Monster";
     return 1;
   }
 

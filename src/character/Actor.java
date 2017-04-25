@@ -5,7 +5,7 @@ package character;
  */
 public abstract class Actor implements Movement {
   protected String actorName;
-  protected int mapID;
+  protected int mapId;
   protected int actorRow;
   protected int actorColumn;
   protected int health;
@@ -24,7 +24,7 @@ public abstract class Actor implements Movement {
    */
   public Actor(String actorName,int actorMap,int posX,int posY) {
     this.actorName = actorName;
-    this.mapID = actorMap;
+    this.mapId = actorMap;
     this.actorRow = posX;
     this.actorColumn = posY;
     health = 0;
@@ -47,8 +47,8 @@ public abstract class Actor implements Movement {
    * Getter dari Kode Map.
    * @return Int berupa Kode Map.
    */
-  public int getMapID() {
-    return mapID;
+  public int getMapId() {
+    return mapId;
   }
 
   /**
@@ -117,10 +117,10 @@ public abstract class Actor implements Movement {
 
   /**
    * Setter dari Kode Map.
-   * @param mapID Kode Map baru.
+   * @param mapId Kode Map baru.
    */
-  public void setMapID(int mapID) {
-    this.mapID = mapID;
+  public void setMapId(int mapId) {
+    this.mapId = mapId;
   }
 
   /**
@@ -193,7 +193,7 @@ public abstract class Actor implements Movement {
         actorRow = actorRow + 1;
         break;
       case "left":
-        actorColumn = actorColumn -1;
+        actorColumn = actorColumn - 1;
         break;
       case "right":
         actorColumn = actorColumn + 1;

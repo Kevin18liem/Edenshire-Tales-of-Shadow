@@ -1,4 +1,4 @@
-package character.Dialogue;
+package character.dialogue;
 
 import java.util.Vector;
 

@@ -1,0 +1,13 @@
+0
+Main Quest
+TestQuest
+-1
+talk
+Talk to NPC1
+null
+0 1
+1
+.
+#
+
+-1

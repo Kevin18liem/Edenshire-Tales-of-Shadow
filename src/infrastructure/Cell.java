@@ -1,9 +1,9 @@
-package Infrastructure;
+package infrastructure;
 
 /**
  * Created by edwin on 18/04/17.
  */
-public class Cell implements Renderable{
+public class Cell implements Renderable {
   private int cellRow;
   private int cellColumn;
   private char type;
@@ -72,11 +72,8 @@ public class Cell implements Renderable{
    * Prosedur Mencetak Cell.
    */
   public void render() {
-    if(type == 'r' ||
-       type == 'w' ||
-       type == 's' ||
-       type == 'a' ||
-       type == 'd') {
+    if (type == 'r' || type == 'w' || type == 's' || type == 'a'
+        || type == 'd') {
       System.out.print(" ");
     } else {
       assert (type == 'x' || type == 'P' || type == 'M' || type == 'A'

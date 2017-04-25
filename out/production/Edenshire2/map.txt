@@ -1,50 +1,35 @@
-1 1
-InitialMap
-5 5
-xxwxx
-xrrrx
-xrrrx
-xrrrd
-xsxxx
-2 9 2
-3 0 2
--1
-1 2 0
-EastMap
-5 5
-xxxxx
-xrrrx
-arrrx
-xrrrx
-xxxxx
--1
--1
-0 3 4
--1
-NorthMap
-10 10
+0
+Safe
+8 10
+-1 -1
 xxxxxxxxxx
 xrrrrrrrrx
 xrrrrrrrrx
-xrrrrxxxxx
-xrrrrxrrrr
-xrrrrxrrrr
-xrrrrxrrrr
-xrrrrxxxxr
-xrrrrrrrxr
-xxsxxxxxxr
--1
-0 0 2
--1
--1
-SouthMap
-4 4
-xxwx
-xrrx
-xrrx
-xxxx
-0 4 1
+xrrrrrrrrx
+xrrrrrrrrd
+xrrrrrrrrx
+xrrrrrrrrx
+xxxxxxxxxx
 -1
 -1
 -1
-#
+1 4 0
+
+1
+Monster
+8 10
+-1 -1
+xxxxxxxxxx
+xrrrrrrrrx
+xrrrrrrrrx
+xrrrrrrrrx
+arrrrrrrrx
+xrrrrrrrrx
+xrrrrrrrrx
+xxxxxxxxxx
+-1
+-1
+0 4 9
+-1
+
+-1

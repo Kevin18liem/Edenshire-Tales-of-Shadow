@@ -1,4 +1,4 @@
-package Quest;
+package quest;
 
 import java.util.Vector;
 
@@ -13,9 +13,9 @@ public class Quest {
   private boolean isComplete;
 
   /**
-   * Constructor Quest.
-   * @param questName Nama dari Quest.
-   * @param missions Kumpulan Mission dari Quest.
+   * Constructor quest.
+   * @param questName Nama dari quest.
+   * @param missions Kumpulan Mission dari quest.
    */
   public Quest(String questName,Vector<Mission> missions) {
     this.questName = questName;
@@ -26,8 +26,8 @@ public class Quest {
   }
 
   /**
-   * Getter Nama Quest.
-   * @return Nama dari Quest.
+   * Getter Nama quest.
+   * @return Nama dari quest.
    */
   public String getQuestName() {
     return questName;
@@ -35,7 +35,7 @@ public class Quest {
 
   /**
    * Getter isComplete.
-   * @return nilai boolean apakah Quest sudah diselesaikan.
+   * @return nilai boolean apakah quest sudah diselesaikan.
    */
   public boolean isComplete() {
     return isComplete;
@@ -43,14 +43,14 @@ public class Quest {
 
   /**
    * Getter isActive.
-   * @return nilai boolean apakah Quest sudah aktif.
+   * @return nilai boolean apakah quest sudah aktif.
    */
   public boolean isActive() {
     return isActive;
   }
 
   /**
-   * Getter Mission dari Quest.
+   * Getter Mission dari quest.
    * @return Mission yang sedang berlangsung.
    */
   public Mission getCurrentMission() {
@@ -58,23 +58,23 @@ public class Quest {
   }
 
   /**
-   * Getter spesifik Mission dari Quest.
+   * Getter spesifik Mission dari quest.
    * @param missionId Indeks Mission.
-   * @return Mission spesifik dari Quest.
+   * @return Mission spesifik dari quest.
    */
   public Mission getMission(int missionId) {
     return missions.get(missionId);
   }
 
   /**
-   * Prosedur Mengaktifkan Quest.
+   * Prosedur Mengaktifkan quest.
    */
   public void startQuest() {
     isActive = true;
   }
 
   /**
-   * Prosedur Penanda Perkembangan Quest.
+   * Prosedur Penanda Perkembangan quest.
    */
   public int progressQuest() {
     int skill = -1;

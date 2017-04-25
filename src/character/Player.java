@@ -1,6 +1,6 @@
 package character;
 
-import character.Skill.Skillset;
+import character.skill.Skillset;
 import java.util.Random;
 
 /**
@@ -13,17 +13,17 @@ public class Player extends Actor {
   /**
    * Constructor Player.
    * @param playerName Nama dari Player.
-   * @param mapID Kode Map dari Player.
+   * @param mapId Kode Map dari Player.
    * @param posX Posisi Ordinat dari Player.
    * @param posY Posisi Absis dari Player.
-   * @param skillset Skill Set dari PlayStyle Player.
+   * @param skillset skill Set dari PlayStyle Player.
    */
   public Player(String playerName,
-                int mapID,
+                int mapId,
                 int posX,
                 int posY,
                 Skillset skillset) {
-    super(playerName,mapID,posX,posY);
+    super(playerName,mapId,posX,posY);
     strength = 100;
     health = strength * 5;
     defense = 100;
@@ -36,7 +36,7 @@ public class Player extends Actor {
 
   /**
    * Getter SkillSet Player.
-   * @return Skill Set dari PlayStyle Pilihan Player.
+   * @return skill Set dari PlayStyle Pilihan Player.
    */
   public Skillset getSkillset() {
     return skillset;
@@ -71,10 +71,9 @@ public class Player extends Actor {
    * @param experience Experience yang didapat Player lewat Battle.
    */
   public void gainExp(int experience) {
-    if (this.experience + experience >= getLevel()*150) {
+    if (this.experience + experience >= getLevel() * 150) {
       setLevel(getLevel() + 1);
-      setExperience((this.experience + experience)
-        % ((getLevel() - 1) * 150));
+      setExperience((this.experience + experience) % ((getLevel() - 1) * 150));
       switch (skillset.getSkillsetName()) {
         case "Warrior":
           strength += 3;
@@ -102,7 +101,7 @@ public class Player extends Actor {
       }
       System.out.println("Level UP!");
     } else {
-      assert (this.experience + experience < level*150) : "Tidak Naik Level";
+      assert (this.experience + experience < level * 150) : "Tidak Naik Level";
       setExperience(this.experience + experience);
     }
   }
@@ -111,7 +110,7 @@ public class Player extends Actor {
    * Damage Calculator Player.
    * @param attackKey Pilihan Aksi Player.
    * @param defMonster Defense dari Monster.
-   * @return
+   * @return nilai Damage oleh Player kepada Monster.
    */
   public int attack(char attackKey, int defMonster) {
     int returnValue = -1;
@@ -163,7 +162,7 @@ public class Player extends Actor {
     } else {
       returnValue = agility - defMonster;
     }
-    if (returnValue < 0) {
+    if (returnValue <= 0) {
       return 1;
     } else {
       return returnValue;

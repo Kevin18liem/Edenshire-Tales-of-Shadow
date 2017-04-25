@@ -1,4 +1,4 @@
-package Infrastructure;
+package infrastructure;
 
 /**
  * Created by edwin on 21/04/17.
@@ -6,18 +6,18 @@ package Infrastructure;
 public class Gate {
   private int rowTarget;
   private int columnTarget;
-  private int mapIDTarget;
+  private int mapIdTarget;
 
   /**
    * Constructor Gate.
    * @param rowTarget Posisi Ordinat dari Map Tujuan.
    * @param columnTarget Posisi Absis dari Map Tujuan.
-   * @param mapIDTarget Kode dari Map Tujuan.
+   * @param mapIdTarget Kode dari Map Tujuan.
    */
-  public Gate(int rowTarget,int columnTarget,int mapIDTarget) {
+  public Gate(int rowTarget,int columnTarget,int mapIdTarget) {
     this.rowTarget = rowTarget;
     this.columnTarget = columnTarget;
-    this.mapIDTarget = mapIDTarget;
+    this.mapIdTarget = mapIdTarget;
   }
 
   /**
@@ -40,7 +40,7 @@ public class Gate {
    * Getter Kode Map Tujuan.
    * @return Kode Map Tujuan.
    */
-  public int getMapIDTarget() {
-    return mapIDTarget;
+  public int getMapIdTarget() {
+    return mapIdTarget;
   }
 }

@@ -1,0 +1,12 @@
+0
+NPC Test
+0
+Morning!
+Morning too!
+.
+You just talked to me!
+null
+.
+#
+
+-1

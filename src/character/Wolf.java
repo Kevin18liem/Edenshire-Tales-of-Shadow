@@ -3,7 +3,7 @@ package character;
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class Wolf extends Monster{
+public class Wolf extends Monster {
   protected String attackName;
   protected String specialAttackName;
 
@@ -28,7 +28,7 @@ public class Wolf extends Monster{
     if (getAgility() > defPlayer) {
       return (getAgility() - defPlayer);
     }
-    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
+    assert (getAgility() - defPlayer <= 0) : "Defense Player > Agility Monster";
     return 1;
   }
 

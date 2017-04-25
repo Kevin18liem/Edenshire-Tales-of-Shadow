@@ -3,7 +3,7 @@ package character;
 /**
  * Created by ClementAndreas on 4/23/2017.
  */
-public class GolemKnight extends Monster{
+public class GolemKnight extends Monster {
   protected String attackName;
   protected String specialAttackName;
 
@@ -28,7 +28,7 @@ public class GolemKnight extends Monster{
     if (getAgility() > defPlayer) {
       return 2 * (getAgility() - defPlayer);
     }
-    assert (getAgility() - defPlayer < 0) : "Defense Player > Agility Monster";
+    assert (getAgility() - defPlayer <= 0) : "Defense Player > Agility Monster";
     return 1;
   }
 
@@ -38,7 +38,7 @@ public class GolemKnight extends Monster{
    * @return nilai Damage Special Attack Golem Knight.
    */
   public int specialAttack(int defPlayer) {
-    return 4*getAgility();
+    return 4 * getAgility();
   }
 
   /**

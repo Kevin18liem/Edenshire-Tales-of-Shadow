@@ -1,4 +1,4 @@
-package character.Skill;
+package character.skill;
 
 import java.util.Vector;
 
@@ -11,7 +11,7 @@ public class Skillset {
 
   /**
    * Constructor SkillSet.
-   * @param skillsetName Nama Skill Set berdasarkan PlayStyle.
+   * @param skillsetName Nama skill Set berdasarkan PlayStyle.
    */
   public Skillset(String skillsetName) {
     this.skillsetName = skillsetName;
@@ -19,31 +19,31 @@ public class Skillset {
   }
 
   /**
-   * Getter dari Nama Skill Set.
-   * @return Nama dari Skill Set.
+   * Getter dari Nama skill Set.
+   * @return Nama dari skill Set.
    */
   public String getSkillsetName() {
     return skillsetName;
   }
 
   /**
-   * Getter dari Skill.
-   * @return Kumpulan Skill dari PlayStyle tertentu.
+   * Getter dari skill.
+   * @return Kumpulan skill dari PlayStyle tertentu.
    */
   public Vector<Skill> getSkills() {
     return skills;
   }
 
   /**
-   * Prosedur Menambahkan Skill pada Skill Set.
-   * @param newskill Skill yang akan ditambahkan.
+   * Prosedur Menambahkan skill pada skill Set.
+   * @param newskill skill yang akan ditambahkan.
    */
   public void addSkill(Skill newskill) {
     skills.addElement(newskill);
   }
 
   /**
-   * Prosedur Unlock Skill pada Skill Set PlayStyle tertentu.
+   * Prosedur Unlock skill pada skill Set PlayStyle tertentu.
    */
   public void unlockSkill() {
     int i = 0;
