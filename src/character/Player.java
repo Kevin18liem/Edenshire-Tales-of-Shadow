@@ -4,7 +4,7 @@ import character.skill.Skillset;
 import java.util.Random;
 
 /**
- * Created by ClementAndreas on 18/04/17.
+ * Created by ClementAndreas.
  */
 public class Player extends Actor {
   private int level;

@@ -1,7 +1,7 @@
 package infrastructure;
 
 /**
- * Created by edwin on 18/04/17.
+ * Created by Trevin.
  */
 public interface Renderable {
   public void render();

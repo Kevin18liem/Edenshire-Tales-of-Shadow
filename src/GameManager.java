@@ -23,10 +23,8 @@ import java.util.Vector;
 import quest.Mission;
 import quest.Quest;
 
-
-
 /**
- * Created by edwin on 18/04/17.
+ * Created by edwin.
  */
 public class GameManager {
   private Vector<Map> maps;
@@ -384,8 +382,8 @@ public class GameManager {
     boolean found = false;
     while (!found && i < monsters.size()) {
       Monster monster = monsters.get(i);
-      if (monster.getMapId() == currentMapId && monster.getActorRow() == player.getActorRow() /*&&
-          monster.getActorColumn() == player.getActorColumn() && monster.getHealth() > 0*/) {
+      if (monster.getMapId() == currentMapId && monster.getActorRow() == player.getActorRow()
+            && monster.getActorColumn() == player.getActorColumn()) {
         found = true;
       } else {
         i++;

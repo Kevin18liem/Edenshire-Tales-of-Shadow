@@ -1,8 +1,9 @@
 package infrastructure;
 
 /**
- * Created by edwin on 21/04/17.
+ * Created by edwin.
  */
+
 public class Gate {
   private int rowTarget;
   private int columnTarget;

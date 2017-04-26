@@ -4,7 +4,7 @@ import infrastructure.Map;
 import java.util.Random;
 
 /**
- * Created by ClementAndreas on 4/22/2017.
+ * Created by ClementAndreas.
  */
 public abstract class Monster extends Actor implements Movement {
 

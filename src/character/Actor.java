@@ -1,7 +1,7 @@
 package character;
 
 /**
- * Created by ClementAndreas on 18/04/17.
+ * Created by ClementAndreas.
  */
 public abstract class Actor implements Movement {
   protected String actorName;

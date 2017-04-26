@@ -3,7 +3,7 @@ package quest;
 import java.util.Vector;
 
 /**
- * Created by USER on 4/19/2017.
+ * Created by Edwin.
  */
 public class Quest {
   private String questName;

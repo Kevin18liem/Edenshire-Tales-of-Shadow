@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 /**
- * Created by USER on 4/22/2017.
+ * Created by Kevin.
  */
 
 public class People extends Actor implements Movement {

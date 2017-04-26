@@ -1,7 +1,7 @@
 package infrastructure;
 
 /**
- * Created by edwin on 18/04/17.
+ * Created by edwin.
  */
 public class Cell implements Renderable {
   private int cellRow;

@@ -1,0 +1,5 @@
+Starting audit...
+[WARN] C:\Users\USER\Downloads\IF_Semester4\OOP\TUBES_OOP\TUBES3\fileterbaru\Edenshire-Tales-of-Shadow\src\EdenshireUserInterface.java:16: Using the '.*' form of import should be avoided - javax.swing.*. [AvoidStarImport]
+[WARN] C:\Users\USER\Downloads\IF_Semester4\OOP\TUBES_OOP\TUBES3\fileterbaru\Edenshire-Tales-of-Shadow\src\OpeningSeq.java:1: Using the '.*' form of import should be avoided - java.awt.*. [AvoidStarImport]
+[WARN] C:\Users\USER\Downloads\IF_Semester4\OOP\TUBES_OOP\TUBES3\fileterbaru\Edenshire-Tales-of-Shadow\src\OpeningSeq.java:4: Using the '.*' form of import should be avoided - javax.swing.*. [AvoidStarImport]
+Audit done.

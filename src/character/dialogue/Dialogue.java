@@ -3,7 +3,7 @@ package character.dialogue;
 import java.util.Vector;
 
 /**
- * Created by USER on 4/19/2017.
+ * Created by edwin.
  */
 public class Dialogue {
   private Vector<String> dialogues;

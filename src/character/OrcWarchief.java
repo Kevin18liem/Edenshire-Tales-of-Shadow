@@ -1,7 +1,7 @@
 package character;
 
 /**
- * Created by ClementAndreas on 4/23/2017.
+ * Created by ClementAndreas.
  */
 public class OrcWarchief extends Monster {
   protected String attackName;

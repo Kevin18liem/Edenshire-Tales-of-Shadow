@@ -3,7 +3,7 @@ package infrastructure;
 import java.util.Vector;
 
 /**
- * Created by edwin on 18/04/17.
+ * Created by Kevin.
  */
 public class Map {
   private String mapName;
